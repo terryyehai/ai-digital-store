@@ -26,7 +26,7 @@ class TechAgent:
         return emotions.get(emotion, "")
     
     def recommend(self, category, budget):
-        print(f"\n💻 {this.name} 推薦3C...")
+        print(f"\n💻 {self.name} 推薦3C...")
         
         products = {
             "筆電": ["MacBook Air M3", "ThinkPad X1", "ROG Zephyrus"],
