@@ -23,14 +23,20 @@ UNSPLASH_URL = "https://source.unsplash.com/featured/1080x1920/?{}"
 
 
 def find_font():
-    """找到可用的字體"""
+    """找到可用的字體 - 優先支援中文"""
     fonts = [
+        "/usr/share/fonts/opentype/noto/NotoSansCJK-Black.ttc",
+        "/usr/share/fonts/opentype/noto/NotoSerifCJK-Bold.ttc",
+        "/usr/share/fonts/truetype/arphic/ukai.ttc",
+        "/usr/share/fonts/truetype/arphic/uming.ttc",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
         "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
     ]
     for fp in fonts:
         if os.path.exists(fp):
+            print(f"   ✅ 使用字體: {fp.split('/')[-1]}")
             return fp
+    print("   ⚠️ 無法找到支援中文的字體")
     return None
 
 
