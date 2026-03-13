@@ -3,232 +3,452 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🤖 AI Digital Store - 智能數位產品商店</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>AI Digital Products | 實用 AI 工具模板</title>
+    <meta name="description" content="精選 AI Prompt 模板與工作流工具，幫助提升工作效率。適用於內容創作者、開發者、行銷人員。">
     <style>
-        body { font-family: 'Noto Sans TC', sans-serif; }
-        .gradient-text {
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --bg: #ffffff;
+            --bg-alt: #f9fafb;
+            --border: #e5e7eb;
         }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            background: var(--bg);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Header */
+        header {
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 24px;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: var(--bg-alt);
+        }
+        
+        .hero h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 48px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        /* Products */
+        .products {
+            padding: 64px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .section-title h2 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .section-title p {
+            color: var(--text-light);
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        
         .product-card {
-            transition: transform 0.3s, box-shadow 0.3s;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            transition: box-shadow 0.2s, border-color 0.2s;
         }
+        
         .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            border-color: var(--primary);
+        }
+        
+        .product-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+        
+        .product-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .product-card p {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 16px;
+        }
+        
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .product-price {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .product-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .product-btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* About */
+        .about {
+            padding: 64px 0;
+            background: var(--bg-alt);
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+        }
+        
+        .about-item {
+            text-align: center;
+        }
+        
+        .about-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+        
+        .about-item h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .about-item p {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        /* Contact */
+        .contact {
+            padding: 64px 0;
+            text-align: center;
+        }
+        
+        .contact h2 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .contact p {
+            color: var(--text-light);
+            margin-bottom: 24px;
+        }
+        
+        .contact-email {
+            display: inline-block;
+            background: var(--bg-alt);
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 16px;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 32px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-light);
+            font-size: 14px;
         }
     </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen">
+<body>
     <!-- Header -->
-    <header class="py-6 px-4 border-b border-gray-800 backdrop-blur-md fixed w-full z-50 bg-gray-900/80">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold gradient-text">🤖 AI Digital Store</h1>
+    <header>
+        <div class="container">
+            <div class="logo">AI<span>Digital</span></div>
             <nav>
-                <a href="#products" class="mx-3 hover:text-purple-400 transition">產品</a>
-                <a href="#how-to-buy" class="mx-3 hover:text-purple-400 transition">購買方式</a>
+                <a href="#products">產品</a>
+                <a href="#about">關於</a>
+                <a href="#contact">聯繫</a>
             </nav>
         </div>
     </header>
 
     <!-- Hero -->
-    <section class="py-32 px-4 text-center">
-        <h2 class="text-5xl font-bold mb-6">
-            <span class="gradient-text">AI 賦能</span> 數位產品
-        </h2>
-        <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-            精選 AI Prompt 模板、工作流腳本、自動化指南<br>
-            幫助你提升工作效率 10 倍！
-        </p>
-        <div class="flex gap-4 justify-center">
-            <a href="#products" class="bg-purple-600 hover:bg-purple-700 px-8 py-3 rounded-full font-semibold transition">
-                開始探索 →
-            </a>
-        </div>
-        
-        <!-- Stats -->
-        <div class="mt-16 flex justify-center gap-12 text-center">
-            <div>
-                <div class="text-3xl font-bold gradient-text">10+</div>
-                <div class="text-gray-500">產品數</div>
-            </div>
-            <div>
-                <div class="text-3xl font-bold gradient-text">100%</div>
-                <div class="text-gray-500">AI 生成</div>
-            </div>
-            <div>
-                <div class="text-3xl font-bold gradient-text">0%</div>
-                <div class="text-gray-500">上架費</div>
+    <section class="hero">
+        <div class="container">
+            <h1>實用 AI 工具模板</h1>
+            <p>精選 AI Prompt 模板與工作流工具，幫助提升工作效率。適用於內容創作者、開發者與行銷人員。</p>
+            
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-value">10+</div>
+                    <div class="stat-label">產品數量</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">6</div>
+                    <div class="stat-label">適用領域</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">$7.99</div>
+                    <div class="stat-label">起價</div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Products -->
-    <section id="products" class="py-16 px-4">
-        <div class="max-w-7xl mx-auto">
-            <h3 class="text-3xl font-bold text-center mb-12">熱門產品</h3>
+    <section class="products" id="products">
+        <div class="container">
+            <div class="section-title">
+                <h2>產品列表</h2>
+                <p>選擇適合你的 AI 工具</p>
+            </div>
             
-            <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div class="product-grid">
                 <!-- Product 1 -->
-                <div class="product-card bg-gray-800 rounded-2xl p-5 border border-gray-700">
-                    <div class="text-3xl mb-3">📝</div>
-                    <h4 class="text-lg font-bold mb-2">Blog Post Prompt Pack</h4>
-                    <p class="text-gray-400 text-sm mb-3">SEO優化文章生成Prompt</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-xl font-bold text-purple-400">$9.99</span>
-                        <a href="#how-to-buy" class="bg-purple-600 px-3 py-1 rounded text-sm">購買</a>
+                <div class="product-card">
+                    <div class="product-icon">📝</div>
+                    <h3>部落格文章 Prompt</h3>
+                    <p>SEO 優化文章生成提示詞，適用於內容創作者</p>
+                    <div class="product-footer">
+                        <span class="product-price">$9.99</span>
+                        <a href="#contact" class="product-btn">詢問</a>
                     </div>
                 </div>
-
+                
                 <!-- Product 2 -->
-                <div class="product-card bg-gray-800 rounded-2xl p-5 border border-gray-700">
-                    <div class="text-3xl mb-3">🎬</div>
-                    <h4 class="text-lg font-bold mb-2">YouTube Script Pro</h4>
-                    <p class="text-gray-400 text-sm mb-3">影片腳本生成器</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-xl font-bold text-purple-400">$7.99</span>
-                        <a href="#how-to-buy" class="bg-purple-600 px-3 py-1 rounded text-sm">購買</a>
+                <div class="product-card">
+                    <div class="product-icon">🎬</div>
+                    <h3>YouTube 腳本範本</h3>
+                    <p>影片腳本生成結構，節省構思時間</p>
+                    <div class="product-footer">
+                        <span class="product-price">$7.99</span>
+                        <a href="#contact" class="product-btn">詢問</a>
                     </div>
                 </div>
-
+                
                 <!-- Product 3 -->
-                <div class="product-card bg-gray-800 rounded-2xl p-5 border border-gray-700">
-                    <div class="text-3xl mb-3">📊</div>
-                    <h4 class="text-lg font-bold mb-2">Notion AI Workflow</h4>
-                    <p class="text-gray-400 text-sm mb-3">Notion工作流模板</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-xl font-bold text-purple-400">$14.99</span>
-                        <a href="#how-to-buy" class="bg-purple-600 px-3 py-1 rounded text-sm">購買</a>
+                <div class="product-card">
+                    <div class="product-icon">📊</div>
+                    <h3>Notion 工作流範本</h3>
+                    <p>個人管理與項目追蹤模板</p>
+                    <div class="product-footer">
+                        <span class="product-price">$14.99</span>
+                        <a href="#contact" class="product-btn">詢問</a>
                     </div>
                 </div>
-
+                
                 <!-- Product 4 -->
-                <div class="product-card bg-gray-800 rounded-2xl p-5 border border-gray-700">
-                    <div class="text-3xl mb-3">💼</div>
-                    <h4 class="text-lg font-bold mb-2">Business Email Pack</h4>
-                    <p class="text-gray-400 text-sm mb-3">商業郵件模板合集</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-xl font-bold text-purple-400">$12.99</span>
-                        <a href="#how-to-buy" class="bg-purple-600 px-3 py-1 rounded text-sm">購買</a>
+                <div class="product-card">
+                    <div class="product-icon">💼</div>
+                    <h3>商業郵件範本</h3>
+                    <p>專業郵件寫作提示詞，適用於商務溝通</p>
+                    <div class="product-footer">
+                        <span class="product-price">$12.99</span>
+                        <a href="#contact" class="product-btn">詢問</a>
                     </div>
                 </div>
-
+                
                 <!-- Product 5 -->
-                <div class="product-card bg-gray-800 rounded-2xl p-5 border border-gray-700">
-                    <div class="text-3xl mb-3">🗓️</div>
-                    <h4 class="text-lg font-bold mb-2">Social Media Calendar</h4>
-                    <p class="text-gray-400 text-sm mb-3">社群內容日曆模板</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-xl font-bold text-purple-400">$14.99</span>
-                        <a href="#how-to-buy" class="bg-purple-600 px-3 py-1 rounded text-sm">購買</a>
+                <div class="product-card">
+                    <div class="product-icon">🗓️</div>
+                    <h3>社群內容日曆</h3>
+                    <p>一個月的內容規劃模板</p>
+                    <div class="product-footer">
+                        <span class="product-price">$14.99</span>
+                        <a href="#contact" class="product-btn">詢問</a>
                     </div>
                 </div>
-
+                
                 <!-- Product 6 -->
-                <div class="product-card bg-gray-800 rounded-2xl p-5 border border-gray-700">
-                    <div class="text-3xl mb-3">🐍</div>
-                    <h4 class="text-lg font-bold mb-2">Python Automation</h4>
-                    <p class="text-gray-400 text-sm mb-3">自動化腳本合集</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-xl font-bold text-purple-400">$19.99</span>
-                        <a href="#how-to-buy" class="bg-purple-600 px-3 py-1 rounded text-sm">購買</a>
+                <div class="product-card">
+                    <div class="product-icon">🐍</div>
+                    <h3>Python 自動化腳本</h3>
+                    <p>常用自動化腳本範例，適用於開發者</p>
+                    <div class="product-footer">
+                        <span class="product-price">$19.99</span>
+                        <a href="#contact" class="product-btn">詢問</a>
                     </div>
                 </div>
-
+                
                 <!-- Product 7 -->
-                <div class="product-card bg-gray-800 rounded-2xl p-5 border border-gray-700">
-                    <div class="text-3xl mb-3">🎯</div>
-                    <h4 class="text-lg font-bold mb-2">ChatGPT Cheat Sheet</h4>
-                    <p class="text-gray-400 text-sm mb-3">提示詞技巧手冊</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-xl font-bold text-purple-400">$9.99</span>
-                        <a href="#how-to-buy" class="bg-purple-600 px-3 py-1 rounded text-sm">購買</a>
+                <div class="product-card">
+                    <div class="product-icon">🎯</div>
+                    <h3>ChatGPT 技巧手冊</h3>
+                    <p>提示詞編寫技巧與最佳實踐</p>
+                    <div class="product-footer">
+                        <span class="product-price">$9.99</span>
+                        <a href="#contact" class="product-btn">詢問</a>
                     </div>
                 </div>
-
+                
                 <!-- Product 8 -->
-                <div class="product-card bg-gray-800 rounded-2xl p-5 border border-gray-700">
-                    <div class="text-3xl mb-3">🖼️</div>
-                    <h4 class="text-lg font-bold mb-2">AI Image Guide</h4>
-                    <p class="text-gray-400 text-sm mb-3">AI繪圖生成指南</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-xl font-bold text-purple-400">$14.99</span>
-                        <a href="#how-to-buy" class="bg-purple-600 px-3 py-1 rounded text-sm">購買</a>
-                    </div>
-                </div>
-
-                <!-- Product 9 -->
-                <div class="product-card bg-gray-800 rounded-2xl p-5 border border-gray-700">
-                    <div class="text-3xl mb-3">⚡</div>
-                    <h4 class="text-lg font-bold mb-2">Notion AI Setup</h4>
-                    <p class="text-gray-400 text-sm mb-3">Notion AI 自動化指南</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-xl font-bold text-purple-400">$11.99</span>
-                        <a href="#how-to-buy" class="bg-purple-600 px-3 py-1 rounded text-sm">購買</a>
-                    </div>
-                </div>
-
-                <!-- Product 10 -->
-                <div class="product-card bg-gray-800 rounded-2xl p-5 border border-gray-700">
-                    <div class="text-3xl mb-3">🎨</div>
-                    <h4 class="text-lg font-bold mb-2">Midjourney Master</h4>
-                    <p class="text-gray-400 text-sm mb-3">Midjourney 提示詞</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-xl font-bold text-purple-400">$9.99</span>
-                        <a href="#how-to-buy" class="bg-purple-600 px-3 py-1 rounded text-sm">購買</a>
+                <div class="product-card">
+                    <div class="product-icon">🖼️</div>
+                    <h3>AI 繪圖指南</h3>
+                    <p>Midjourney 與 Stable Diffusion 提示詞指南</p>
+                    <div class="product-footer">
+                        <span class="product-price">$14.99</span>
+                        <a href="#contact" class="product-btn">詢問</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- How to Buy -->
-    <section id="how-to-buy" class="py-16 px-4 bg-gray-800">
-        <div class="max-w-4xl mx-auto">
-            <h3 class="text-2xl font-bold text-center mb-12">💳 購買方式</h3>
+    <!-- About -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>關於我們</h2>
+            </div>
             
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="bg-gray-900 p-6 rounded-xl">
-                    <h4 class="text-xl font-bold mb-4">📱 方式一：Telegram</h4>
-                    <ol class="text-gray-400 space-y-2">
-                        <li>1. 聯繫 Telegram bot</li>
-                        <li>2. 告訴我們想要的產品</li>
-                        <li>3. 發送加密貨幣付款</li>
-                        <li>4. 立即收到產品</li>
-                    </ol>
-                    <a href="https://t.me/terryyeh_bot" class="mt-4 inline-block bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded-lg">
-                        聯繫 Bot →
-                    </a>
+            <div class="about-grid">
+                <div class="about-item">
+                    <div class="about-icon">🤖</div>
+                    <h3>實用導向</h3>
+                    <p>專注於實際工作場景的 AI 應用工具</p>
                 </div>
-
-                <div class="bg-gray-900 p-6 rounded-xl">
-                    <h4 class="text-xl font-bold mb-4">📧 方式二：Email</h4>
-                    <ol class="text-gray-400 space-y-2">
-                        <li>1. 發送郵件至 terry@yeh.idv.tw</li>
-                        <li>2. 說明想要的產品</li>
-                        <li>3. 我們發送發票</li>
-                        <li>4. 付款後發送產品</li>
-                    </ol>
-                    <a href="mailto:terry@yeh.idv.tw" class="mt-4 inline-block bg-green-500 hover:bg-green-600 px-6 py-2 rounded-lg">
-                        發送郵件 →
-                    </a>
+                
+                <div class="about-item">
+                    <div class="about-icon">📦</div>
+                    <h3>簡單易用</h3>
+                    <p>無需技術背景即可上手使用</p>
+                </div>
+                
+                <div class="about-item">
+                    <div class="about-icon">🔄</div>
+                    <h3>持續更新</h3>
+                    <p>根據用戶反饋不斷優化</p>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="mt-8 bg-gray-900 p-6 rounded-xl">
-                <h4 class="text-xl font-bold mb-4">💰 加密貨幣付款</h4>
-                <p class="text-gray-400 mb-4">我們接受：BTC, ETH, USDT (TRC20), SOL</p>
-                <p class="text-gray-500 text-sm">付款後請截圖並發送確認</p>
-            </div>
+    <!-- Contact -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>聯繫我們</h2>
+            <p>有問題或購買需求？歡迎發信詢問</p>
+            <a href="mailto:terry@yeh.idv.tw" class="contact-email">terry@yeh.idv.tw</a>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-8 px-4 border-t border-gray-800 text-center text-gray-500">
-        <p>© 2026 AI Digital Store. All rights reserved.</p>
-        <p class="text-sm mt-2">Powered by OpenClaw 🤖</p>
+    <footer>
+        <div class="container">
+            <p>© 2026 AI Digital Products. All rights reserved.</p>
+        </div>
     </footer>
 </body>
 </html>
