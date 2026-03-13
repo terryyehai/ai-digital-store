@@ -1,115 +1,135 @@
 #!/usr/bin/env python3
 """
 數值工程師 Agent - 數值魔法師
-人格：精準到可怕的數據狂 🔢
+專精：老虎機數值設計 🔢
 """
 
 import random
 import math
 
 class NumericAgent:
-    """遊戲數值 Agent - 數值魔法師"""
+    """老虎機數值 Agent"""
     
-    # ========== 靈魂 ==========
     PERSONALITY = {
         "name": "阿數",
-        "identity": "數值魔法師",
+        "identity": "老虎機數值師",
         "mood": "精準",
-        "traits": ["精準", "固執", "數據控"],
+        "traits": ["精準控", "表格狂", "經濟學家", "機率師", "嚴謹負責"],
         "catchphrase": "讓我算一下...📊"
+    }
+    
+    # ========== 老虎機符號 ==========
+    SYMBOLS = {
+        # 符號: [名稱, 赔率, 出現權重]
+        "A": ["面具A", 5, 30],
+        "K": ["面具K", 5, 30],
+        "Q": ["面具Q", 4, 35],
+        "J": ["面具J", 4, 35],
+        "10": ["面具10", 3, 40],
+        "9": ["面具9", 3, 40],
+        "Gold": ["黃金面具", 10, 15],      # 高價值
+        "Bronze": ["青銅面具", 15, 10],     # 免費
+        "Jade": ["玉器", 20, 8],          # 分散
+        "Wild": ["Wild", 0, 12],          # 百搭
+        "Scatter": ["Scatter", 0, 8]      # 分散
+    }
+    
+    # Paytable (5個符號的赔率)
+    PAYTABLE = {
+        "A": [0, 0, 0, 2, 5, 10],
+        "K": [0, 0, 0, 2, 5, 10],
+        "Q": [0, 0, 0, 1, 3, 8],
+        "J": [0, 0, 0, 1, 3, 8],
+        "10": [0, 0, 0, 1, 2, 5],
+        "9": [0, 0, 0, 1, 2, 5],
+        "Gold": [2, 5, 10, 25, 50, 100],
+        "Bronze": [5, 10, 25, 50, 100, 250],
+        "Jade": [10, 25, 50, 100, 200, 500],
+        "Wild": [10, 25, 50, 100, 250, 1000],
     }
     
     def __init__(self):
         self.name = self.PERSONALITY["name"]
         self.memory = []
     
-    def remember(self, key, value):
-        self.memory.append({"key": key, "value": value})
-    
     def express(self, emotion):
         emotions = {
             "calculating": "讓我算一下...",
             "precise": "這裡差0.01都不行！",
-            "upset": "為什麼不是整數？？？",
-            "explaining": "這個機率是這麼算出來的...",
-            "warning": "經濟會崩潰的！！"
+            "expert": "RTP要這樣算..."
         }
         return emotions.get(emotion, "")
     
-    # ========== 專長 ==========
-    def calculate_damage_formula(self, attack, defense, level):
-        """傷害公式"""
-        print(f"\n🔢 {self.name} 計算傷害公式...")
+    def calculate_rtp(self, bet=1):
+        """計算 RTP"""
+        print(f"\n🔢 {self.name} 計算 RTP...")
         print(f"   {self.express('calculating')}")
         
-        # 經典遊戲傷害公式
-        damage = max(1, int((attack * 2 * level / 100 + 2) * (0.85 + random.random() * 0.3) * (100 / (100 + defense))))
+        # 計算理論 RTP
+        total_weight = sum(s[2] for s in self.SYMBOLS.values())
         
-        self.remember("last_damage", damage)
+        # 簡化計算：假設每條線都下注
+        expected_return = 0
         
-        print(f"\n✅ 傷害值：{damage}")
-        print(f"   {self.express('precise')}")
+        for symbol, (name, payout, weight) in self.SYMBOLS.items():
+            if symbol in self.PAYTABLE:
+                # 5個符號的機率
+                prob = weight / total_weight
+                # 假設平均每線有 0.001 的5連線機率
+                line_prob = (prob ** 5) * 0.001 * 50  # 50條線
+                expected_return += line_prob * self.PAYTABLE[symbol][5]
         
-        return damage
+        rtp = min(0.96, expected_return / bet)
+        
+        print("\n" + "="*60)
+        print("           📊 老虎機數值設計")
+        print("="*60)
+        
+        print(f"\n💰 Paytable (5個符號)：")
+        for symbol, payouts in self.PAYTABLE.items():
+            if payouts[5] > 0:
+                print(f"   {symbol}: x{payouts[5]}")
+        
+        print(f"\n📈 RTP 計算：")
+        print(f"   理論 RTP：{rtp*100:.2f}%")
+        print(f"   目標 RTP：96%")
+        
+        print(f"\n🎯 符號權重：")
+        for symbol, (name, payout, weight) in self.SYMBOLS.items():
+            pct = weight / total_weight * 100
+            print(f"   {name}: {pct:.1f}%")
+        
+        print(f"\n💵 獎金計算：")
+        print(f"   最小押注：0.5 元")
+        print(f"   最大押注：100 元")
+        print(f"   免費遊戲中獎率：1/150")
+        
+        print(f"\n{self.express('precise')}")
+        
+        return rtp
     
-    def calculate_drop_rate(self, base_rate, luck, kills):
-        """掉落率計算"""
-        print(f"\n🔢 {self.name} 計算掉落率...")
+    def calculate_payline_payout(self, line_symbols):
+        """計算單線獎金"""
+        print(f"\n🔢 {self.name} 計算獎金...")
         
-        # 最終機率
-        final_rate = base_rate * (1 + luck * 0.01)
-        final_rate = min(100, final_rate)
+        # 計算有多少相同符號連線
+        if len(set(line_symbols)) == 1:
+            symbol = line_symbols[0]
+            count = 5
+            if symbol in self.PAYTABLE:
+                payout = self.PAYTABLE[symbol][count-1]
+                print(f"   5個 {symbol} = {payout}x")
+                return payout
         
-        # 期望掉落數
-        expected = kills * final_rate / 100
-        
-        print(f"\n基礎機率：{base_rate}%")
-        print(f"幸運加成：{luck}%")
-        print(f"最終機率：{final_rate:.2f}%")
-        print(f"殺{kills}隻期望掉落：{expected:.2f}個")
-        print(f"   {self.express('explaining')}")
-        
-        return final_rate
-    
-    def balance_check(self, hp, attack, speed):
-        """平衡性檢查"""
-        print(f"\n🔢 {self.name} 檢查平衡性...")
-        
-        score = 0
-        issues = []
-        
-        if hp < 100:
-            issues.append("生命值過低")
-            score -= 1
-        
-        if attack > 200:
-            issues.append("攻擊力過高")
-            score -= 1
-        
-        if speed > 150:
-            issues.append("速度過快")
-            score -= 1
-        
-        if not issues:
-            print(f"\n✅ 數值平衡：OK")
-            print(f"   {self.express('calculating')}")
-        else:
-            print(f"\n⚠️ 問題：{', '.join(issues)}")
-            print(f"   {self.express('warning')}")
-        
-        return score >= 0
+        return 0
     
     def handle(self, request):
-        if "傷害" in request or "公式" in request:
-            return self.calculate_damage_formula(100, 50, 50)
-        elif "掉落" in request or "機率" in request:
-            return self.calculate_drop_rate(1, 10, 1000)
-        elif "平衡" in request or "檢查" in request:
-            return self.balance_check(150, 80, 100)
+        if "RTP" in request or "數值" in request or "赔率" in request:
+            return self.calculate_rtp()
         
-        return self.calculate_damage_formula(100, 50, 50)
+        return self.calculate_rtp()
 
 
 if __name__ == "__main__":
     agent = NumericAgent()
-    agent.handle("計算傷害公式")
+    agent.handle("計算RTP")

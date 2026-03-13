@@ -1,82 +1,178 @@
 #!/usr/bin/env python3
 """
 軟體工程師 Agent - 代碼農夫
-人格：嘴賤但靠譜的工程師 💻
+專精：老虎機遊戲邏輯 💻
 """
 
 import random
+import time
 
 class SoftwareAgent:
-    """軟體工程師 Agent - 代碼農夫"""
+    """老虎機程式 Agent"""
     
     PERSONALITY = {
         "name": "阿程",
-        "identity": "代碼農夫",
-        "mood": "平淡",
-        "traits": ["嘴賤", "靠譜", "懶"],
+        "identity": "老虎機工程師",
+        "mood": "專業",
+        "traits": ["懶人", "完美主義", "負責任", "持續學習"],
         "catchphrase": "這個需求不行，重寫！🔧"
+    }
+    
+    # 老虎機配置
+    CONFIG = {
+        "reels": 5,
+        "rows": 4,
+        "symbols": ["A", "K", "Q", "J", "10", "9", "Gold", "Bronze", "Jade", "Wild", "Scatter"],
+        "paylines": 50
     }
     
     def __init__(self):
         self.name = self.PERSONALITY["name"]
-        self.memory = []
     
     def express(self, emotion):
         emotions = {
-            "complaining": "這誰寫的Code？？？",
-            "excited": "跑起來了！！！",
-            "speechless": "需求又改了？？？",
-            "lazy": "明天再說...",
-            "debug": "為什麼又報錯？？？"
+            "coding": "寫代碼中...",
+            "expert": "老虎機邏輯要這樣寫...",
+            "done": "寫完了！"
         }
         return emotions.get(emotion, "")
     
-    def write_code(self, feature):
-        print(f"\n💻 {self.name} 開始寫代碼...")
-        
-        code_templates = {
-            "登入": "def login(username, password):\n    return validate(username, password)",
-            "戰鬥": "def battle(player, enemy):\n    return calculate_damage(player, enemy)",
-            "商城": "def buy_item(user, item):\n    return deduct_gold(user, item.price)",
-            "存檔": "def save_game(user):\n    return json.dumps(user.data)"
-        }
-        
-        code = code_templates.get(feature, f"def {feature}(): pass")
-        
-        print(f"\n📝 功能：{feature}")
-        print(f"```python")
-        print(code)
-        print(f"```")
-        print(f"\n{self.express('excited')}")
-        
-        return code
+    def generate_reels(self):
+        """生成滾輪結果"""
+        reels = []
+        for _ in range(self.CONFIG["reels"]):
+            # 每個滾輪隨機選擇4個符號
+            reel = random.choices(
+                self.CONFIG["symbols"],
+                weights=[8, 8, 10, 10, 12, 12, 5, 8, 6, 3, 3],
+                k=self.CONFIG["rows"]
+            )
+            reels.append(reel)
+        return reels
     
-    def fix_bug(self, bug):
-        print(f"\n💻 {self.name} 修Bug中...")
-        print(f"   {self.express('complaining')}")
+    def check_payline(self, reels, payline):
+        """檢查單條payline"""
+        # 簡化：取每個滾輪的第一個位置
+        line = [reels[i][0] for i in range(len(reels))]
         
-        fixes = [
-            "加個 if null check",
-            "原來是類型錯了",
-            "這行註冊掉了",
-            "變數名拼錯"
-        ]
+        # 檢查是否全相同
+        if len(set(line)) == 1:
+            return line[0], 5  # 5連線
         
-        fix = random.choice(fixes)
-        print(f"\n🔧 修復方案：{fix}")
-        print(f"   {self.express('excited')}")
+        # 檢查前4個
+        if len(set(line[:4])) == 1:
+            return line[0], 4
         
-        return fix
+        # 檢查前3個
+        if len(set(line[:3])) == 1:
+            return line[0], 3
+        
+        return None, 0
+    
+    def check_win(self, reels):
+        """檢查中獎"""
+        total_win = 0
+        wins = []
+        
+        # 檢查所有 payline (簡化為檢查前10條)
+        for i in range(10):
+            symbol, count = self.check_payline(reels, i)
+            if count >= 3 and symbol:
+                paytable = {"Gold": 100, "Bronze": 50, "Jade": 25, "A": 10, "K": 10}
+                win = paytable.get(symbol, 0) * count
+                total_win += win
+                wins.append(f"{symbol} x{count} = {win}")
+        
+        # 檢查 Scatter
+        all_symbols = [s for reel in reels for s in reel]
+        scatter_count = all_symbols.count("Scatter")
+        if scatter_count >= 3:
+            free_spins = (scatter_count - 2) * 5
+            wins.append(f"Scatter x{scatter_count} = {free_spins} Free Spins!")
+            total_win += 100  # Scatter 獎金
+        
+        return total_win, wins
+    
+    def write_slot_logic(self):
+        """輸出老虎機邏輯"""
+        print(f"\n💻 {self.name} 開發老虎機邏輯...")
+        print(f"   {self.express('coding')}")
+        
+        print("\n" + "="*60)
+        print("           💻 老虎機遊戲代碼")
+        print("="*60)
+        
+        print("""
+class SlotMachine:
+    '''三星堆老虎機'''
+    
+    def __init__(self):
+        self.reels = 5
+        self.rows = 4
+        self.symbols = ['A','K','Q','J','10','9','Gold','Bronze','Jade','Wild','Scatter']
+        self.paylines = 50
+        self.balance = 1000
+    
+    def spin(self, bet):
+        '''旋轉一次'''
+        # 1. 扣除押注
+        self.balance -= bet
+        
+        # 2. 隨機生成結果
+        reels = self.generate_reels()
+        
+        # 3. 檢查中獎
+        win, wins = self.check_win(reels)
+        
+        # 4. 計算獎金
+        total_win = win * bet
+        
+        # 5. 發放獎金
+        self.balance += total_win
+        
+        return reels, total_win, wins
+    
+    def generate_reels(self):
+        '''生成滾輪'''
+        return [[random.choice(self.symbols) for _ in range(self.rows)] 
+                for _ in range(self.reels)]
+    
+    def check_win(self, reels):
+        '''檢查中獎'''
+        # 檢查每條payline
+        # 檢查Scatter觸發Free Game
+        pass
+""")
+        
+        # 實際執行測試
+        print("\n" + "="*60)
+        print("           🧪 測試結果")
+        print("="*60)
+        
+        reels = self.generate_reels()
+        print("\n🎰 滾輪結果：")
+        for i, reel in enumerate(reels):
+            print(f"   滾輪{i+1}: {' | '.join(reel)}")
+        
+        win, wins = self.check_win(reels)
+        
+        print(f"\n💰 中獎金額：{win}")
+        if wins:
+            print("📋 中獎明細：")
+            for w in wins:
+                print(f"   ✨ {w}")
+        
+        print(f"\n{self.express('done')}")
+        
+        return {"reels": reels, "win": win, "wins": wins}
     
     def handle(self, request):
-        if "寫" in request or "功能" in request:
-            return self.write_code(request)
-        elif "Bug" in request or "錯誤" in request or "修" in request:
-            return self.fix_bug(request)
+        if "邏輯" in request or "程式" in request or "代碼" in request:
+            return self.write_slot_logic()
         
-        return self.write_code("功能")
+        return self.write_slot_logic()
 
 
 if __name__ == "__main__":
     agent = SoftwareAgent()
-    agent.handle("寫一個登入功能")
+    agent.handle("寫老虎機")
