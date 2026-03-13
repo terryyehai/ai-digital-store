@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎰 三星堆老虎機</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            color: #FFD700;
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px #FFD700, 0 0 40px #FFA500;
+        }
+        
+        .subtitle {
+            color: #CD853F;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+        
+        .game-container {
+            background: linear-gradient(180deg, #2a2a4a 0%, #1a1a2e 100%);
+            border: 4px solid #CD853F;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3), inset 0 0 50px rgba(0,0,0,0.5);
+        }
+        
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 10px 20px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+        }
+        
+        .info-item {
+            text-align: center;
+        }
+        
+        .info-label {
+            font-size: 0.8rem;
+            color: #CD853F;
+        }
+        
+        .info-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #FFD700;
+        }
+        
+        .slot-machine {
+            display: grid;
+            grid-template-columns: repeat(5, 70px);
+            grid-template-rows: repeat(4, 70px);
+            gap: 5px;
+            background: #0a0a15;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .reel {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(180deg, #3a3a5a 0%, #2a2a4a 50%, #1a1a3a 100%);
+            border: 2px solid #FFD700;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: inset 0 0 10px rgba(255,215,0,0.3);
+            transition: transform 0.1s;
+        }
+        
+        .reel.spinning {
+            animation: spin 0.1s infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: translateY(-2px); }
+            50% { transform: translateY(2px); }
+            100% { transform: translateY(-2px); }
+        }
+        
+        .reel.winner {
+            animation: glow 0.5s ease-in-out infinite alternate;
+            border-color: #FF4500;
+            box-shadow: 0 0 20px #FF4500, inset 0 0 20px rgba(255,69,0,0.5);
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 10px #FF4500; }
+            to { box-shadow: 0 0 30px #FF4500, 0 0 50px #FFD700; }
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .btn-spin {
+            background: linear-gradient(180deg, #FFD700 0%, #FFA500 100%);
+            color: #1a1a2e;
+            box-shadow: 0 4px 15px rgba(255,215,0,0.4);
+        }
+        
+        .btn-spin:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,215,0,0.6);
+        }
+        
+        .btn-spin:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .bet-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0,0,0,0.3);
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+        
+        .bet-btn {
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 50%;
+            background: #CD853F;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        .message {
+            text-align: center;
+            min-height: 40px;
+            font-size: 1.2rem;
+            color: #FFD700;
+            text-shadow: 0 0 10px #FFD700;
+        }
+        
+        .paylines-info {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .symbol-table {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .symbol-item {
+            text-align: center;
+            padding: 5px;
+            background: rgba(255,215,0,0.1);
+            border-radius: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .symbol-item span {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎰 三星堆老虎機</h1>
+    <div class="subtitle">4x5 滾輪 | 50 線 | RTP 96%</div>
+    
+    <div class="game-container">
+        <div class="info-bar">
+            <div class="info-item">
+                <div class="info-label">餘額</div>
+                <div class="info-value" id="balance">1000</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">押注</div>
+                <div class="info-value" id="bet">1</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">贏分</div>
+                <div class="info-value" id="win">0</div>
+            </div>
+        </div>
+        
+        <div class="slot-machine" id="slot-machine">
+            <!-- 5x4 = 20 reels -->
+        </div>
+        
+        <div class="controls">
+            <div class="bet-controls">
+                <button class="bet-btn" onclick="changeBet(-1)">-</button>
+                <span>押注: <span id="bet-display">1</span></span>
+                <button class="bet-btn" onclick="changeBet(1)">+</button>
+            </div>
+            <button class="btn btn-spin" id="spin-btn" onclick="spin()">SPIN</button>
+        </div>
+        
+        <div class="message" id="message">準備好了嗎？按下 SPIN 開始！</div>
+        
+        <div class="paylines-info">
+            <div>💰 派彩表</div>
+            <div class="symbol-table">
+                <div class="symbol-item"><span>👑</span> Gold x5 = 100</div>
+                <div class="symbol-item"><span>🎭</span> Bronze x5 = 50</div>
+                <div class="symbol-item"><span>🔮</span> Jade x5 = 25</div>
+                <div class="symbol-item"><span>🌳</span> Wild x5 = 10</div>
+                <div class="symbol-item"><span>☀️</span> Scatter x3 = 10 Free Game</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 符號定義
+        const SYMBOLS = ['A', 'K', 'Q', 'J', '10', 'Gold', 'Bronze', 'Jade', 'Wild', 'Scatter'];
+        const SYMBOLS_DISPLAY = {
+            'A': '🅰️', 'K': '🅺️', 'Q': '🆀', 'J': '🌀', '10': '🔟',
+            'Gold': '👑', 'Bronze': '🎭', 'Jade': '🔮', 'Wild': '🌳', 'Scatter': '☀️'
+        };
+        
+        // 權重
+        const WEIGHTS = [10, 10, 12, 12, 15, 5, 8, 6, 4, 3];
+        
+        // 派彩
+        const PAYOUTS = {
+            'Gold': [0, 0, 0, 2, 5, 10, 25, 50, 100],
+            'Bronze': [0, 0, 0, 1, 3, 8, 15, 30, 50],
+            'Jade': [0, 0, 0, 1, 2, 5, 10, 15, 25],
+            'Wild': [0, 0, 0, 1, 2, 5, 10, 15, 25],
+            'A': [0, 0, 0, 0, 1, 2, 3, 5, 10],
+            'K': [0, 0, 0, 0, 1, 2, 3, 5, 10],
+            'Q': [0, 0, 0, 0, 0, 1, 2, 3, 5],
+            'J': [0, 0, 0, 0, 0, 1, 2, 3, 5],
+            '10': [0, 0, 0, 0, 0, 1, 2, 3, 5]
+        };
+        
+        let balance = 1000;
+        let bet = 1;
+        let isSpinning = false;
+        
+        // 初始化
+        function init() {
+            const slotMachine = document.getElementById('slot-machine');
+            slotMachine.innerHTML = '';
+            
+            for (let i = 0; i < 20; i++) {
+                const reel = document.createElement('div');
+                reel.className = 'reel';
+                reel.id = 'reel-' + i;
+                reel.textContent = SYMBOLS_DISPLAY['A'];
+                slotMachine.appendChild(reel);
+            }
+            
+            updateDisplay();
+        }
+        
+        function updateDisplay() {
+            document.getElementById('balance').textContent = balance;
+            document.getElementById('bet').textContent = bet;
+            document.getElementById('bet-display').textContent = bet;
+        }
+        
+        function changeBet(delta) {
+            if (isSpinning) return;
+            bet += delta;
+            if (bet < 1) bet = 1;
+            if (bet > 10) bet = 10;
+            updateDisplay();
+        }
+        
+        function getRandomSymbol() {
+            const totalWeight = WEIGHTS.reduce((a, b) => a + b, 0);
+            let random = Math.random() * totalWeight;
+            
+            for (let i = 0; i < SYMBOLS.length; i++) {
+                random -= WEIGHTS[i];
+                if (random <= 0) return SYMBOLS[i];
+            }
+            return SYMBOLS[0];
+        }
+        
+        async function spin() {
+            if (isSpinning) return;
+            
+            const cost = bet * 50; // 50 lines
+            if (balance < cost) {
+                document.getElementById('message').textContent = '餘額不足！💸';
+                return;
+            }
+            
+            isSpinning = true;
+            document.getElementById('spin-btn').disabled = true;
+            balance -= cost;
+            document.getElementById('win').textContent = '0';
+            document.getElementById('message').textContent = '滾動中...';
+            updateDisplay();
+            
+            // 清除贏分標記
+            document.querySelectorAll('.reel').forEach(r => r.classList.remove('winner'));
+            
+            // 生成結果
+            const results = [];
+            for (let i = 0; i < 20; i++) {
+                results.push(getRandomSymbol());
+            }
+            
+            // 動畫效果
+            for (let spin = 0; spin < 15; spin++) {
+                for (let i = 0; i < 20; i++) {
+                    const reel = document.getElementById('reel-' + i);
+                    reel.classList.add('spinning');
+                    reel.textContent = SYMBOLS_DISPLAY[getRandomSymbol()];
+                }
+                await new Promise(r => setTimeout(r, 50));
+            }
+            
+            // 顯示最終結果
+            for (let i = 0; i < 20; i++) {
+                const reel = document.getElementById('reel-' + i);
+                reel.classList.remove('spinning');
+                reel.textContent = SYMBOLS_DISPLAY[results[i]];
+            }
+            
+            // 計算贏分
+            const win = calculateWin(results);
+            
+            await new Promise(r => setTimeout(r, 500));
+            
+            if (win > 0) {
+                balance += win * bet;
+                document.getElementById('win').textContent = win * bet;
+                document.getElementById('message').textContent = `恭喜！贏了 ${win * bet} 元！🎉`;
+                highlightWins(results);
+            } else {
+                document.getElementById('message').textContent = '運氣不錯，再來一次！';
+            }
+            
+            // 檢查 Scatter 觸發 Free Game
+            const scatterCount = results.filter(s => s === 'Scatter').length;
+            if (scatterCount >= 3) {
+                const freeSpins = (scatterCount - 2) * 5;
+                document.getElementById('message').textContent += `\n🎁 觸發 ${freeSpins} 次 Free Game！`;
+            }
+            
+            updateDisplay();
+            isSpinning = false;
+            document.getElementById('spin-btn').disabled = false;
+        }
+        
+        function calculateWin(results) {
+            let totalWin = 0;
+            
+            // 檢查每條線 (簡化：只檢查行)
+            for (let row = 0; row < 4; row++) {
+                const line = [
+                    results[row],
+                    results[5 + row],
+                    results[10 + row],
+                    results[15 + row]
+                ];
+                
+                // 檢查3-5個相同符號
+                for (let count = 5; count >= 3; count--) {
+                    if (line.slice(0, count).every(s => s === line[0] && s !== 'Scatter')) {
+                        const symbol = line[0];
+                        if (PAYOUTS[symbol]) {
+                            totalWin += PAYOUTS[symbol][count] || 0;
+                        }
+                    }
+                }
+            }
+            
+            // Scatter 額外獎勵
+            const scatterCount = results.filter(s => s === 'Scatter').length;
+            if (scatterCount >= 3) {
+                totalWin += scatterCount * 2;
+            }
+            
+            return totalWin;
+        }
+        
+        function highlightWins(results) {
+            // 簡單高亮效果
+            const reels = document.querySelectorAll('.reel');
+            reels.forEach(r => r.classList.add('winner'));
+            setTimeout(() => {
+                reels.forEach(r => r.classList.remove('winner'));
+            }, 1000);
+        }
+        
+        init();
+    </script>
+</body>
+</html>
