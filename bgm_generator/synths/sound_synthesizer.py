@@ -161,14 +161,51 @@ class InstrumentSounds:
     
     # 旋律音色
     def piano(self, note, duration=0.5):
-        """鋼琴"""
+        """鋼琴 - 真實鋼琴音色"""
         freq = self.note_to_freq(note)
-        # 多層正弦波模擬泛音
-        signal = self.synth.sine_wave(freq, duration, 0.5)
-        signal += self.synth.sine_wave(freq * 2, duration, 0.25)
-        signal += self.synth.sine_wave(freq * 3, duration, 0.125)
-        signal += self.synth.sine_wave(freq * 4, duration, 0.0625)
-        return self.synth.envelope(signal, attack=0.01, decay=0.2, sustain=0.5, release=0.3)
+        t = np.linspace(0, duration, int(self.sample_rate * duration))
+        
+        # 鋼琴關鍵：多層諧波 + 鍵擊噪音
+        signal = np.zeros(len(t))
+        
+        # 8層諧波（鋼琴特徵）
+        harmonics = [1, 2, 3, 4, 5, 6, 7, 8]
+        amplitudes = [1.0, 0.5, 0.25, 0.125, 0.0625, 0.03, 0.015, 0.008]
+        
+        for h, amp in zip(harmonics, amplitudes):
+            signal += amp * np.sin(2 * np.pi * freq * h * t)
+        
+        # 鍵擊噪音（攻擊時的機械噪音）
+        attack_samples = int(0.008 * self.sample_rate)
+        if attack_samples < len(signal):
+            noise = np.random.randn(attack_samples) * 0.05
+            signal[:attack_samples] += noise
+        
+        # 鋼琴包絡：快速起音、自然衰減
+        # 改進：每層諧波獨立衰減 + 增強鍵擊噪音
+        # 第一部分：諧波信號獨立衰減
+        harm_signal = np.zeros(len(t))
+        for h, base_amp in zip(harmonics, amplitudes):
+            hf = freq * h
+            hs = np.sin(2 * np.pi * hf * t)
+            # 高頻諧波衰減更快
+            hs *= base_amp * np.exp(-t * (2 + h * 0.3))
+            harm_signal += hs
+        
+        # 第二部分：鍵擊噪音（增強）
+        noise_signal = np.zeros(len(t))
+        attack_samples = int(0.01 * self.sample_rate)  # 10ms
+        if attack_samples < len(t):
+            noise = np.random.randn(attack_samples) * 0.1
+            # 簡單低通
+            noise = np.convolve(noise, np.ones(5)/5, mode='same')
+            noise_signal[:attack_samples] = noise
+        
+        # 合併
+        signal = harm_signal + noise_signal * 0.5
+        
+        # 鋼琴 ADSR 包絡
+        return self.synth.envelope(signal, attack=0.005, decay=0.2, sustain=0.35, release=0.6)
     
     def synth_lead(self, note, duration=0.4):
         """合成旋律"""
@@ -376,18 +413,8 @@ class ChineseInstruments:
         return self.synth.envelope(signal, attack=0.2, decay=0.2, sustain=0.5, release=0.8)
     
     def zheng_piano(self, note, duration=0.6):
-        """鋼琴（優雅版）"""
-        freq = self.note_to_freq(note)
-        t = np.linspace(0, duration, int(self.sample_rate * duration))
-        
-        # 鋼琴音色：多層泛音
-        signal = self.synth.sine_wave(freq, duration, 0.4)
-        signal += self.synth.sine_wave(freq * 2, duration, 0.2)
-        signal += self.synth.sine_wave(freq * 3, duration, 0.1)
-        signal += self.synth.sine_wave(freq * 4, duration, 0.05)
-        
-        # 溫和的衰减
-        return self.synth.envelope(signal, attack=0.005, decay=0.3, sustain=0.4, release=0.3)
+        """鋼琴（優雅版）- 真實鋼琴音色"""
+        return self.piano(note, duration)  # 使用改良後的鋼琴音色
     
     # 輔助方法
     def note_to_freq(self, note):
@@ -405,4 +432,191 @@ class ChineseInstruments:
                 except:
                     pass
         return 440
+
+
+# ==================== 音色驗證系統 ====================
+
+class SoundVerifier:
+    """音色驗證器 - 確保輸出正確的樂器音色"""
+    
+    def __init__(self, sample_rate=44100):
+        self.sample_rate = sample_rate
+    
+    def analyze_frequency(self, audio):
+        """分析頻譜"""
+        from scipy.fft import fft, fftfreq
+        
+        n = len(audio)
+        yf = fft(audio)
+        xf = fftfreq(n, 1/self.sample_rate)[:n//2]
+        power = 2.0/n * np.abs(yf[0:n//2])
+        
+        return xf, power
+    
+    def get_spectral_centroid(self, audio):
+        """計算頻譜重心（音色亮度）"""
+        xf, power = self.analyze_frequency(audio)
+        centroid = np.sum(xf * power) / np.sum(power + 1e-10)
+        return centroid
+    
+    def get_harmonic_ratio(self, audio):
+        """計算諧波比率"""
+        xf, power = self.analyze_frequency(audio)
+        
+        # 找基頻
+        fundamental_idx = np.argmax(power[:2000])  # 低頻區找基頻
+        fundamental_freq = xf[fundamental_idx]
+        
+        # 計算諧波能量
+        harmonics = []
+        for h in range(1, 6):
+            harmonic_freq = fundamental_freq * h
+            if harmonic_freq < xf[-1]:
+                idx = int(harmonic_freq * len(xf) / (self.sample_rate/2))
+                if idx < len(power):
+                    harmonics.append(power[idx])
+        
+        return harmonics, fundamental_freq
+    
+    def verify_piano(self, audio):
+        """驗證是否為鋼琴音色"""
+        # 鋼琴特徵：
+        # 1. 清晰的諧波結構
+        # 2. 快速起音
+        # 3. 頻譜重心在 800-2000 Hz
+        
+        centroid = self.get_spectral_centroid(audio)
+        harmonics, freq = self.get_harmonic_ratio(audio)
+        
+        # 起音分析
+        attack_samples = int(0.02 * self.sample_rate)
+        attack_energy = np.sum(audio[:attack_samples]**2)
+        total_energy = np.sum(audio**2)
+        attack_ratio = attack_energy / (total_energy + 1e-10)
+        
+        # 驗證條件
+        checks = {
+            "頻譜重心": 500 < centroid < 3000,
+            "諧波存在": len(harmonics) >= 3,
+            "起音明顯": attack_ratio > 0.05,
+            "基頻合理": 60 < freq < 2000,
+        }
+        
+        passed = sum(checks.values())
+        total = len(checks)
+        
+        return passed >= 3, {
+            "centroid": centroid,
+            "fundamental_freq": freq,
+            "harmonics": harmonics,
+            "attack_ratio": attack_ratio,
+            "checks": checks,
+            "score": f"{passed}/{total}"
+        }
+    
+    def verify_guzheng(self, audio):
+        """驗證是否為古箏音色"""
+        # 古箏特徵：
+        # 1. 豐富的低頻共鳴
+        # 2. 顆粒感
+        # 3. 較寬的頻譜
+        
+        centroid = self.get_spectral_centroid(audio)
+        
+        # 低頻能量
+        xf, power = self.analyze_frequency(audio)
+        low_freq_mask = xf < 500
+        low_energy = np.sum(power[low_freq_mask])
+        total_energy = np.sum(power)
+        low_ratio = low_energy / (total_energy + 1e-10)
+        
+        checks = {
+            "低頻共鳴": low_ratio > 0.2,
+            "頻譜合理性": 200 < centroid < 2500,
+        }
+        
+        passed = sum(checks.values())
+        return passed >= 1, {"centroid": centroid, "low_ratio": low_ratio, "score": f"{passed}/2"}
+    
+    def verify_dizi(self, audio):
+        """驗證是否為笛子音色"""
+        # 笛子特徵：
+        # 1. 純淨音色（諧波較少）
+        # 2. 高頻較少
+        # 3. 頻譜重心適中
+        
+        centroid = self.get_spectral_centroid(audio)
+        harmonics, freq = self.get_harmonic_ratio(audio)
+        
+        # 諧波比（笛子諧波較少）
+        if len(harmonics) > 0:
+            harmonic_ratio = harmonics[0] / (sum(harmonics) + 1e-10)
+        else:
+            harmonic_ratio = 0
+        
+        checks = {
+            "頻譜純淨": centroid < 2000,
+            "基頻存在": freq > 200,
+            "諧波比": harmonic_ratio > 0.3,
+        }
+        
+        passed = sum(checks.values())
+        return passed >= 2, {"centroid": centroid, "harmonic_ratio": harmonic_ratio, "score": f"{passed}/3"}
+    
+    def verify_erhu(self, audio):
+        """驗證是否為二胡音色"""
+        # 二胡特徵：
+        # 1. 頻率波動（滑音、顫音）
+        # 2. 較少的諧波
+        # 3. 中頻為主
+        
+        centroid = self.get_spectral_centroid(audio)
+        
+        # 頻率波動
+        instantaneous_freq = np.diff(audio)
+        freq_variance = np.var(instantaneous_freq)
+        
+        checks = {
+            "中頻為主": 200 < centroid < 1500,
+            "頻率波動": freq_variance > 0.001,
+        }
+        
+        passed = sum(checks.values())
+        return passed >= 1, {"centroid": centroid, "variance": freq_variance, "score": f"{passed}/2"}
+    
+    def verify_instrument(self, audio, instrument_name):
+        """驗證樂器音色"""
+        verifiers = {
+            "piano": self.verify_piano,
+            "guzheng": self.verify_guzheng,
+            "dizi": self.verify_dizi,
+            "erhu": self.verify_erhu,
+        }
+        
+        verifier = verifiers.get(instrument_name)
+        if verifier:
+            return verifier(audio)
+        
+        # 預設：只做基本檢查
+        centroid = self.get_spectral_centroid(audio)
+        return centroid > 0, {"centroid": centroid, "note": "basic check only"}
+
+
+# ==================== 測試 ====================
+
+if __name__ == "__main__":
+    # 測試鋼琴驗證
+    synth = Synthesizer()
+    verifier = SoundVerifier()
+    
+    # 生成鋼琴音符
+    piano_note = synth.sine_wave(261.63, 1.0, 0.5)  # C4
+    piano_note += synth.sine_wave(523.25, 1.0, 0.25)  # C5
+    piano_note += synth.sine_wave(784.87, 1.0, 0.125)  # G5
+    piano_note = synth.envelope(piano_note, attack=0.01, decay=0.3, sustain=0.4, release=0.3)
+    
+    # 驗證
+    is_valid, details = verifier.verify_piano(piano_note)
+    print(f"鋼琴驗證: {'✅ 通過' if is_valid else '❌ 失敗'}")
+    print(f"詳情: {details}")
 

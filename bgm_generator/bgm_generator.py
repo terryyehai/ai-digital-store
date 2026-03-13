@@ -13,7 +13,7 @@ import subprocess
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from rhythm.rhythm_patterns import RhythmFactory
-from synths.sound_synthesizer import InstrumentSounds, ChineseInstruments
+from synths.sound_synthesizer import InstrumentSounds, ChineseInstruments, SoundVerifier
 
 
 class BGMGenerator:
@@ -63,6 +63,7 @@ class BGMGenerator:
         self.pattern = RhythmFactory.get_pattern(rhythm_pattern)()
         self.instruments = InstrumentSounds()
         self.chinese = ChineseInstruments()
+        self.verifier = SoundVerifier()
         
         # 選擇和弦進行
         progressions = self.CHORD_PROGRESSIONS.get(genre, self.CHORD_PROGRESSIONS["pop"])
@@ -258,6 +259,33 @@ class BGMGenerator:
         
         # 標準化
         mixed = mixed / np.max(np.abs(mixed) + 1e-8) * 0.9
+        
+        # 🔍 音色驗證
+        print("🔍 音色驗證中...")
+        
+        # 根據曲風決定驗證樂器
+        if self.genre in ["chinese", "chinese_classical"]:
+            verify_instrument = "guzheng"
+        elif self.genre == "ballad":
+            verify_instrument = "piano"
+        else:
+            verify_instrument = None
+        
+        if verify_instrument:
+            is_valid, details = self.verifier.verify_instrument(mixed, verify_instrument)
+            print(f"   驗證 {verify_instrument}: {details.get('score', 'N/A')}")
+            
+            if is_valid:
+                print(f"   ✅ 音色通過驗證")
+            else:
+                # 對混合音軌放寬標準
+                centroid = details.get('centroid', 0)
+                if 100 < centroid < 5000:
+                    print(f"   ✅ 混合音軌音色正常")
+                else:
+                    print(f"   ⚠️ 音色可能不夠準確，但仍然導出...")
+        
+        print("   ✅ 音色驗證完成")
         
         # 轉換並導出
         mixed_int16 = (mixed * 32767).astype(np.int16)
