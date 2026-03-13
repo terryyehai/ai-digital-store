@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Digital Products | 實用 AI 工具模板</title>
-    <meta name="description" content="精選 AI Prompt 模板與工作流工具，幫助提升工作效率。適用於內容創作者、開發者、行銷人員。">
+    <title>AI Prompt 工具箱 | 內容創作者的效率利器</title>
+    <meta name="description" content="精選 AI Prompt 模板，幫助內容創作者與行銷人員提升工作效率。">
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --text: #1f2937;
-            --text-light: #6b7280;
-            --bg: #ffffff;
-            --bg-alt: #f9fafb;
-            --border: #e5e7eb;
+            --primary: #0ea5e9;
+            --primary-dark: #0284c7;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --border: #e2e8f0;
+            --success: #10b981;
         }
         
         * {
@@ -23,21 +24,21 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             color: var(--text);
             line-height: 1.6;
             background: var(--bg);
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 960px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 20px;
         }
         
         /* Header */
         header {
-            background: var(--bg);
+            background: var(--white);
             border-bottom: 1px solid var(--border);
             padding: 16px 0;
             position: sticky;
@@ -52,8 +53,8 @@
         }
         
         .logo {
-            font-size: 20px;
-            font-weight: 600;
+            font-size: 18px;
+            font-weight: 700;
             color: var(--text);
         }
         
@@ -61,138 +62,144 @@
             color: var(--primary);
         }
         
-        nav a {
-            color: var(--text-light);
-            text-decoration: none;
-            margin-left: 24px;
-            font-size: 14px;
-            transition: color 0.2s;
-        }
-        
-        nav a:hover {
-            color: var(--primary);
-        }
-        
         /* Hero */
         .hero {
-            padding: 80px 0;
+            padding: 60px 0 40px;
             text-align: center;
-            background: var(--bg-alt);
+            background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
         }
         
         .hero h1 {
-            font-size: 36px;
+            font-size: 32px;
             font-weight: 700;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             color: var(--text);
         }
         
-        .hero p {
+        .hero .tagline {
             font-size: 18px;
             color: var(--text-light);
-            max-width: 600px;
-            margin: 0 auto 32px;
+            margin-bottom: 32px;
         }
         
-        .hero-stats {
+        /* Social Proof */
+        .social-proof {
             display: flex;
             justify-content: center;
-            gap: 48px;
-            margin-top: 48px;
+            gap: 32px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
         }
         
-        .stat {
-            text-align: center;
-        }
-        
-        .stat-value {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--primary);
-        }
-        
-        .stat-label {
+        .proof-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-size: 14px;
             color: var(--text-light);
+        }
+        
+        .proof-item .icon {
+            color: var(--success);
         }
         
         /* Products */
         .products {
-            padding: 64px 0;
+            padding: 40px 0;
         }
         
-        .section-title {
-            text-align: center;
-            margin-bottom: 48px;
-        }
-        
-        .section-title h2 {
-            font-size: 28px;
+        .products h2 {
+            font-size: 24px;
             font-weight: 600;
+            text-align: center;
             margin-bottom: 8px;
         }
         
-        .section-title p {
+        .products .subtitle {
+            text-align: center;
             color: var(--text-light);
+            margin-bottom: 32px;
         }
         
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 24px;
+        .product-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
         
-        .product-card {
-            background: var(--bg);
+        .product-item {
+            background: var(--white);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
             transition: box-shadow 0.2s, border-color 0.2s;
         }
         
-        .product-card:hover {
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        .product-item:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
             border-color: var(--primary);
         }
         
         .product-icon {
             font-size: 32px;
-            margin-bottom: 16px;
+            flex-shrink: 0;
         }
         
-        .product-card h3 {
-            font-size: 18px;
+        .product-info {
+            flex: 1;
+        }
+        
+        .product-info h3 {
+            font-size: 16px;
             font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .product-info p {
+            font-size: 14px;
+            color: var(--text-light);
             margin-bottom: 8px;
         }
         
-        .product-card p {
-            font-size: 14px;
+        .product-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 13px;
             color: var(--text-light);
-            margin-bottom: 16px;
         }
         
-        .product-footer {
+        .product-meta span {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding-top: 16px;
-            border-top: 1px solid var(--border);
+            gap: 4px;
+        }
+        
+        .product-right {
+            text-align: right;
+            flex-shrink: 0;
         }
         
         .product-price {
-            font-size: 20px;
-            font-weight: 600;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text);
         }
         
         .product-btn {
+            display: inline-block;
             background: var(--primary);
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
+            padding: 10px 24px;
+            border-radius: 8px;
             font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
+            text-decoration: none;
+            margin-top: 8px;
             transition: background 0.2s;
         }
         
@@ -200,73 +207,80 @@
             background: var(--primary-dark);
         }
         
-        /* About */
-        .about {
-            padding: 64px 0;
-            background: var(--bg-alt);
+        /* FAQ */
+        .faq {
+            padding: 40px 0 60px;
+            background: var(--white);
         }
         
-        .about-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 32px;
-        }
-        
-        .about-item {
+        .faq h2 {
+            font-size: 24px;
+            font-weight: 600;
             text-align: center;
+            margin-bottom: 32px;
         }
         
-        .about-icon {
-            font-size: 40px;
-            margin-bottom: 16px;
+        .faq-list {
+            max-width: 640px;
+            margin: 0 auto;
         }
         
-        .about-item h3 {
-            font-size: 18px;
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+        }
+        
+        .faq-item h3 {
+            font-size: 15px;
             font-weight: 600;
             margin-bottom: 8px;
         }
         
-        .about-item p {
+        .faq-item p {
             font-size: 14px;
             color: var(--text-light);
         }
         
         /* Contact */
         .contact {
-            padding: 64px 0;
+            padding: 60px 0;
             text-align: center;
+            background: var(--white);
         }
         
         .contact h2 {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 600;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
         
         .contact p {
             color: var(--text-light);
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
         
-        .contact-email {
+        .contact-btn {
             display: inline-block;
-            background: var(--bg-alt);
-            padding: 12px 24px;
+            background: var(--text);
+            color: white;
+            padding: 14px 32px;
             border-radius: 8px;
-            border: 1px solid var(--border);
-            color: var(--primary);
             text-decoration: none;
-            font-size: 16px;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+        
+        .contact-btn:hover {
+            opacity: 0.9;
         }
         
         /* Footer */
         footer {
-            padding: 32px 0;
-            border-top: 1px solid var(--border);
+            padding: 24px 0;
             text-align: center;
             color: var(--text-light);
-            font-size: 14px;
+            font-size: 13px;
+            border-top: 1px solid var(--border);
         }
     </style>
 </head>
@@ -274,180 +288,180 @@
     <!-- Header -->
     <header>
         <div class="container">
-            <div class="logo">AI<span>Digital</span></div>
-            <nav>
-                <a href="#products">產品</a>
-                <a href="#about">關於</a>
-                <a href="#contact">聯繫</a>
-            </nav>
+            <div class="logo">AI<span>Prompt</span> 工具箱</div>
         </div>
     </header>
 
     <!-- Hero -->
     <section class="hero">
         <div class="container">
-            <h1>實用 AI 工具模板</h1>
-            <p>精選 AI Prompt 模板與工作流工具，幫助提升工作效率。適用於內容創作者、開發者與行銷人員。</p>
+            <h1>內容創作效率翻倍</h1>
+            <p class="tagline">精選 AI Prompt 模板，幫你節省 70% 創作時間</p>
             
-            <div class="hero-stats">
-                <div class="stat">
-                    <div class="stat-value">10+</div>
-                    <div class="stat-label">產品數量</div>
+            <!-- 社會證明 -->
+            <div class="social-proof">
+                <div class="proof-item">
+                    <span class="icon">✓</span>
+                    <span>47+ 模板可用</span>
                 </div>
-                <div class="stat">
-                    <div class="stat-value">6</div>
-                    <div class="stat-label">適用領域</div>
+                <div class="proof-item">
+                    <span class="icon">✓</span>
+                    <span>6 大應用場景</span>
                 </div>
-                <div class="stat">
-                    <div class="stat-value">$7.99</div>
-                    <div class="stat-label">起價</div>
+                <div class="proof-item">
+                    <span class="icon">✓</span>
+                    <span>持續更新</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Products -->
-    <section class="products" id="products">
+    <section class="products">
         <div class="container">
-            <div class="section-title">
-                <h2>產品列表</h2>
-                <p>選擇適合你的 AI 工具</p>
-            </div>
+            <h2>精選模板</h2>
+            <p class="subtitle">選擇你需要的情境，馬上提升工作效率</p>
             
-            <div class="product-grid">
+            <div class="product-list">
                 <!-- Product 1 -->
-                <div class="product-card">
+                <div class="product-item">
                     <div class="product-icon">📝</div>
-                    <h3>部落格文章 Prompt</h3>
-                    <p>SEO 優化文章生成提示詞，適用於內容創作者</p>
-                    <div class="product-footer">
-                        <span class="product-price">$9.99</span>
-                        <a href="#contact" class="product-btn">詢問</a>
+                    <div class="product-info">
+                        <h3>部落格文章 Prompt 套裝</h3>
+                        <p>SEO 友善文章結構、大綱生成、段落優化，一套搞定</p>
+                        <div class="product-meta">
+                            <span>📄 5 個模板</span>
+                            <span>⏱️ 省 70% 時間</span>
+                        </div>
+                    </div>
+                    <div class="product-right">
+                        <div class="product-price">$9.99</div>
+                        <a href="mailto:terry@yeh.idv.tw?subject=購買：部落格文章 Prompt" class="product-btn">立即購買</a>
                     </div>
                 </div>
                 
                 <!-- Product 2 -->
-                <div class="product-card">
+                <div class="product-item">
                     <div class="product-icon">🎬</div>
-                    <h3>YouTube 腳本範本</h3>
-                    <p>影片腳本生成結構，節省構思時間</p>
-                    <div class="product-footer">
-                        <span class="product-price">$7.99</span>
-                        <a href="#contact" class="product-btn">詢問</a>
+                    <div class="product-info">
+                        <h3>YouTube 腳本模板</h3>
+                        <p>開場鉤子、內容結構、CTA 設計，完整腳本框架</p>
+                        <div class="product-meta">
+                            <span>🎥 3 種腳本類型</span>
+                            <span>⏱️ 10 分鐘完成</span>
+                        </div>
+                    </div>
+                    <div class="product-right">
+                        <div class="product-price">$7.99</div>
+                        <a href="mailto:terry@yeh.idv.tw?subject=購買：YouTube 腳本模板" class="product-btn">立即購買</a>
                     </div>
                 </div>
                 
                 <!-- Product 3 -->
-                <div class="product-card">
-                    <div class="product-icon">📊</div>
-                    <h3>Notion 工作流範本</h3>
-                    <p>個人管理與項目追蹤模板</p>
-                    <div class="product-footer">
-                        <span class="product-price">$14.99</span>
-                        <a href="#contact" class="product-btn">詢問</a>
+                <div class="product-item">
+                    <div class="product-icon">📧</div>
+                    <div class="product-info">
+                        <h3>商業郵件範本</h3>
+                        <p>開發信、跟進信、報價單，各種商業郵件範本</p>
+                        <div class="product-meta">
+                            <span>💼 8 種郵件類型</span>
+                            <span>📈 提升回覆率</span>
+                        </div>
+                    </div>
+                    <div class="product-right">
+                        <div class="product-price">$12.99</div>
+                        <a href="mailto:terry@yeh.idv.tw?subject=購買：商業郵件範本" class="product-btn">立即購買</a>
                     </div>
                 </div>
                 
                 <!-- Product 4 -->
-                <div class="product-card">
-                    <div class="product-icon">💼</div>
-                    <h3>商業郵件範本</h3>
-                    <p>專業郵件寫作提示詞，適用於商務溝通</p>
-                    <div class="product-footer">
-                        <span class="product-price">$12.99</span>
-                        <a href="#contact" class="product-btn">詢問</a>
+                <div class="product-item">
+                    <div class="product-icon">🗓️</div>
+                    <div class="product-info">
+                        <h3>社群內容日曆</h3>
+                        <p>一個月的內容規劃模板，含發布時間建議</p>
+                        <div class="product-meta">
+                            <span>📅 30 天規劃</span>
+                            <span>📱 多平台適用</span>
+                        </div>
+                    </div>
+                    <div class="product-right">
+                        <div class="product-price">$14.99</div>
+                        <a href="mailto:terry@yeh.idv.tw?subject=購買：社群內容日曆" class="product-btn">立即購買</a>
                     </div>
                 </div>
                 
                 <!-- Product 5 -->
-                <div class="product-card">
-                    <div class="product-icon">🗓️</div>
-                    <h3>社群內容日曆</h3>
-                    <p>一個月的內容規劃模板</p>
-                    <div class="product-footer">
-                        <span class="product-price">$14.99</span>
-                        <a href="#contact" class="product-btn">詢問</a>
+                <div class="product-item">
+                    <div class="product-icon">🐍</div>
+                    <div class="product-info">
+                        <h3>Python 自動化腳本</h3>
+                        <p>Email 自動發送、資料處理、網頁爬蟲範例</p>
+                        <div class="product-meta">
+                            <span>⚡ 3 個腳本</span>
+                            <span>🔧 可自訂修改</span>
+                        </div>
+                    </div>
+                    <div class="product-right">
+                        <div class="product-price">$19.99</div>
+                        <a href="mailto:terry@yeh.idv.tw?subject=購買：Python 自動化腳本" class="product-btn">立即購買</a>
                     </div>
                 </div>
                 
                 <!-- Product 6 -->
-                <div class="product-card">
-                    <div class="product-icon">🐍</div>
-                    <h3>Python 自動化腳本</h3>
-                    <p>常用自動化腳本範例，適用於開發者</p>
-                    <div class="product-footer">
-                        <span class="product-price">$19.99</span>
-                        <a href="#contact" class="product-btn">詢問</a>
-                    </div>
-                </div>
-                
-                <!-- Product 7 -->
-                <div class="product-card">
+                <div class="product-item">
                     <div class="product-icon">🎯</div>
-                    <h3>ChatGPT 技巧手冊</h3>
-                    <p>提示詞編寫技巧與最佳實踐</p>
-                    <div class="product-footer">
-                        <span class="product-price">$9.99</span>
-                        <a href="#contact" class="product-btn">詢問</a>
+                    <div class="product-info">
+                        <h3>ChatGPT 技巧手冊</h3>
+                        <p>角色設定、輸出結構、最佳實踐完整指南</p>
+                        <div class="product-meta">
+                            <span>📖 20+ 技巧</span>
+                            <span>✅ 立即上手</span>
+                        </div>
                     </div>
-                </div>
-                
-                <!-- Product 8 -->
-                <div class="product-card">
-                    <div class="product-icon">🖼️</div>
-                    <h3>AI 繪圖指南</h3>
-                    <p>Midjourney 與 Stable Diffusion 提示詞指南</p>
-                    <div class="product-footer">
-                        <span class="product-price">$14.99</span>
-                        <a href="#contact" class="product-btn">詢問</a>
+                    <div class="product-right">
+                        <div class="product-price">$9.99</div>
+                        <a href="mailto:terry@yeh.idv.tw?subject=購買：ChatGPT 技巧手冊" class="product-btn">立即購買</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About -->
-    <section class="about" id="about">
+    <!-- FAQ -->
+    <section class="faq">
         <div class="container">
-            <div class="section-title">
-                <h2>關於我們</h2>
-            </div>
-            
-            <div class="about-grid">
-                <div class="about-item">
-                    <div class="about-icon">🤖</div>
-                    <h3>實用導向</h3>
-                    <p>專注於實際工作場景的 AI 應用工具</p>
+            <h2>常見問題</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <h3>購買後多久會收到？</h3>
+                    <p>確認付款後 24 小時內會發送到你的 Email。</p>
                 </div>
-                
-                <div class="about-item">
-                    <div class="about-icon">📦</div>
-                    <h3>簡單易用</h3>
-                    <p>無需技術背景即可上手使用</p>
+                <div class="faq-item">
+                    <h3>可以修改內容嗎？</h3>
+                    <p>可以，所有模板都是 Markdown 格式，你可以自由修改使用。</p>
                 </div>
-                
-                <div class="about-item">
-                    <div class="about-icon">🔄</div>
-                    <h3>持續更新</h3>
-                    <p>根據用戶反饋不斷優化</p>
+                <div class="faq-item">
+                    <h3>有售后服務嗎？</h3>
+                    <p>有的，任何問題都可以 Email 詢問，我們會盡力協助。</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Contact -->
-    <section class="contact" id="contact">
+    <section class="contact">
         <div class="container">
-            <h2>聯繫我們</h2>
-            <p>有問題或購買需求？歡迎發信詢問</p>
-            <a href="mailto:terry@yeh.idv.tw" class="contact-email">terry@yeh.idv.tw</a>
+            <h2>有問題？</h2>
+            <p>直接發信詢問，我很樂意幫忙</p>
+            <a href="mailto:terry@yeh.idv.tw" class="contact-btn">發信詢問</a>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>© 2026 AI Digital Products. All rights reserved.</p>
+            <p>© 2026 AI Prompt 工具箱. All rights reserved.</p>
         </div>
     </footer>
 </body>
