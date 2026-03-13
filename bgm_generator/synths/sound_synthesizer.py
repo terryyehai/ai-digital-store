@@ -244,3 +244,165 @@ if __name__ == "__main__":
     print(f"鋼琴樣本: {len(piano)} samples")
     
     print("音色庫載入成功")
+
+# ==================== 中國傳統樂器 ====================
+
+class ChineseInstruments:
+    """中國傳統樂器音色庫"""
+    
+    def __init__(self, sample_rate=44100):
+        self.synth = Synthesizer(sample_rate)
+        self.sample_rate = sample_rate
+    
+    def erhu(self, note, duration=1.0):
+        """二胡 - 中國傳統弦樂，音色悲涼憂鬱"""
+        freq = self.note_to_freq(note)
+        t = np.linspace(0, duration, int(self.sample_rate * duration))
+        
+        # 二胡特色：滑音 + 顫音
+        signal = self.synth.sine_wave(freq, duration, 0.5)
+        # 添加滑音效果
+        glide = np.linspace(1.0, 0.95, len(t))
+        signal *= glide
+        # 添加顫音
+        vibrato = 1 + 0.03 * np.sin(2 * np.pi * 6 * t)
+        signal *= vibrato
+        # 添加泛音
+        signal += self.synth.sine_wave(freq * 2, duration, 0.15)
+        signal += self.synth.sine_wave(freq * 3, duration, 0.05)
+        
+        # 二胡包絡：慢起音、長延音
+        return self.synth.envelope(signal, attack=0.1, decay=0.2, sustain=0.6, release=0.3)
+    
+    def guzheng(self, note, duration=0.8):
+        """古箏 - 中國傳統彈撥，音色清脆如流水"""
+        freq = self.note_to_freq(note)
+        t = np.linspace(0, duration, int(self.sample_rate * duration))
+        
+        # 古箏特色：彈撥感 + 共鳴
+        signal = self.synth.sawtooth_wave(freq, duration, 0.3)
+        signal += self.synth.sine_wave(freq, duration, 0.4)
+        # 弦樂共鳴
+        signal += self.synth.sine_wave(freq * 2, duration, 0.2)
+        signal += self.synth.sine_wave(freq * 3, duration, 0.1)
+        
+        # 顫音裝飾
+        vibrato = 1 + 0.02 * np.sin(2 * np.pi * 5 * t)
+        signal *= vibrato
+        
+        # 快速起音，短延音
+        return self.synth.envelope(signal, attack=0.005, decay=0.3, sustain=0.4, release=0.3)
+    
+    def pipa(self, note, duration=0.5):
+        """琵琶 - 中國彈撥樂器，音色鏗鏘有力"""
+        freq = self.note_to_freq(note)
+        t = np.linspace(0, duration, int(self.sample_rate * duration))
+        
+        # 琵琶特色：顆粒感、輪指效果
+        signal = self.synth.square_wave(freq, duration, 0.3)
+        signal += self.synth.sawtooth_wave(freq, duration, 0.2)
+        
+        # 模擬輪指（快速重複）
+        tremolo = np.ones(len(t))
+        for i in range(len(t)):
+            tremolo[i] *= (1 + 0.3 * np.sin(2 * np.pi * 12 * t[i]))
+        signal *= tremolo
+        
+        # 快速起音，短促
+        return self.synth.envelope(signal, attack=0.001, decay=0.2, sustain=0.3, release=0.1)
+    
+    def dizi(self, note, duration=1.5):
+        """笛子 - 中國吹奏樂器，音色悠揚空靈"""
+        freq = self.note_to_freq(note)
+        t = np.linspace(0, duration, int(self.sample_rate * duration))
+        
+        # 笛子特色：純淨音色 + 氣流感
+        signal = self.synth.sine_wave(freq, duration, 0.5)
+        signal += self.synth.sine_wave(freq * 2, duration, 0.2)  # 高音泛音
+        signal += self.synth.sine_wave(freq * 3, duration, 0.1)
+        
+        # 氣流感（輕微波動）
+        breath = 1 + 0.05 * np.sin(2 * np.pi * 3 * t)
+        signal *= breath
+        
+        # 悠長延音
+        return self.synth.envelope(signal, attack=0.05, decay=0.1, sustain=0.8, release=0.4)
+    
+    def suona(self, note, duration=0.6):
+        """嗩吶 - 中國吹管樂器，音色高昂熱鬧"""
+        freq = self.note_to_freq(note)
+        t = np.linspace(0, duration, int(self.sample_rate * duration))
+        
+        # 嗩吶特色：明亮、帶有雜音的張力
+        signal = self.synth.sawtooth_wave(freq, duration, 0.4)
+        signal += self.synth.sine_wave(freq * 2, duration, 0.3)
+        signal += self.synth.noise(duration, 0.1)  # 添加氣息雜音
+        
+        # 顫音
+        vibrato = 1 + 0.04 * np.sin(2 * np.pi * 8 * t)
+        signal *= vibrato
+        
+        # 有力的起音和衰减
+        return self.synth.envelope(signal, attack=0.01, decay=0.2, sustain=0.5, release=0.2)
+    
+    def yangqin(self, note, duration=0.4):
+        """揚琴 - 中國擊弦樂器，音色明亮顆粒"""
+        freq = self.note_to_freq(note)
+        t = np.linspace(0, duration, int(self.sample_rate * duration))
+        
+        # 揚琴特色：顆粒感、金屬音色
+        signal = self.synth.sine_wave(freq, duration, 0.3)
+        signal += self.synth.sine_wave(freq * 2.5, duration, 0.3)  # 金屬泛音
+        signal += self.synth.sine_wave(freq * 4, duration, 0.2)
+        
+        # 快速衰减
+        return self.synth.envelope(signal, attack=0.001, decay=0.3, sustain=0.2, release=0.1)
+    
+    def guqin(self, note, duration=2.0):
+        """古琴 - 中國最古老弦樂，音色深沉內斂"""
+        freq = self.note_to_freq(note)
+        t = np.linspace(0, duration, int(self.sample_rate * duration))
+        
+        # 古琴特色：深沉、餘音繞梁
+        signal = self.synth.sine_wave(freq, duration, 0.4)
+        signal += self.synth.sine_wave(freq * 2, duration, 0.15)
+        
+        # 吟猱效果
+        for i in range(len(t)):
+            if i % 1000 == 0:
+                signal[i:i+100] *= 1.1
+        
+        # 緩慢起音，極長延音
+        return self.synth.envelope(signal, attack=0.2, decay=0.2, sustain=0.5, release=0.8)
+    
+    def zheng_piano(self, note, duration=0.6):
+        """鋼琴（優雅版）"""
+        freq = self.note_to_freq(note)
+        t = np.linspace(0, duration, int(self.sample_rate * duration))
+        
+        # 鋼琴音色：多層泛音
+        signal = self.synth.sine_wave(freq, duration, 0.4)
+        signal += self.synth.sine_wave(freq * 2, duration, 0.2)
+        signal += self.synth.sine_wave(freq * 3, duration, 0.1)
+        signal += self.synth.sine_wave(freq * 4, duration, 0.05)
+        
+        # 溫和的衰减
+        return self.synth.envelope(signal, attack=0.005, decay=0.3, sustain=0.4, release=0.3)
+    
+    # 輔助方法
+    def note_to_freq(self, note):
+        """音符轉頻率"""
+        notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+        if isinstance(note, str):
+            note = note.strip()
+            if len(note) >= 2:
+                try:
+                    note_name = note[:-1]
+                    octave = int(note[-1])
+                    if note_name in notes:
+                        semitone = notes.index(note_name)
+                        return 440 * 2 ** ((semitone - 9 + (octave - 4) * 12) / 12)
+                except:
+                    pass
+        return 440
+

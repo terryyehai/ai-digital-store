@@ -13,7 +13,7 @@ import subprocess
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from rhythm.rhythm_patterns import RhythmFactory
-from synths.sound_synthesizer import InstrumentSounds
+from synths.sound_synthesizer import InstrumentSounds, ChineseInstruments
 
 
 class BGMGenerator:
@@ -28,6 +28,9 @@ class BGMGenerator:
         "funk": [["I7", "IV7", "I7", "V7"], ["ii7", "V7", "Imaj7", "IV7"]],
         "rock": [["I", "V", "vi", "IV"], ["I", "IV", "V", "I"]],
         "ballad": [["I", "vi", "IV", "V"], ["i", "VI", "iv", "V"]],
+        # 中國風
+        "chinese": [["I", "V", "vi", "IV"], ["I", "vi", "IV", "V"], ["I", "IV", "V", "vi"]],
+        "chinese_classical": [["I", "IV", "V", "I"], ["i", "iv", "V", "i"]],
     }
     
     # 調性對應
@@ -52,8 +55,14 @@ class BGMGenerator:
         self.output_dir = output_dir
         
         self.sample_rate = 44100
-        self.pattern = RhythmFactory.get_pattern(genre)()
+        # 根據曲風選擇節奏
+        if genre in ["chinese", "chinese_classical"]:
+            rhythm_pattern = "ambient"  # 中國風用輕柔節奏
+        else:
+            rhythm_pattern = genre
+        self.pattern = RhythmFactory.get_pattern(rhythm_pattern)()
         self.instruments = InstrumentSounds()
+        self.chinese = ChineseInstruments()
         
         # 選擇和弦進行
         progressions = self.CHORD_PROGRESSIONS.get(genre, self.CHORD_PROGRESSIONS["pop"])
@@ -163,8 +172,10 @@ class BGMGenerator:
             chord_notes = self._get_chord_notes(chord)
             chord_time = i * chord_duration
             
-            # 選擇音色
-            if self.genre == "ambient":
+            # 選擇音色 - 中國風使用古箏
+            if self.genre in ["chinese", "chinese_classical"]:
+                play_func = self.chinese.guzheng
+            elif self.genre == "ambient":
                 play_func = self.instruments.pad_ambient
             else:
                 play_func = self.instruments.strings
@@ -193,6 +204,15 @@ class BGMGenerator:
         
         beats_per_chord = (self.tempo * self.duration / 60) / len(self.chord_prog)
         
+        # 中國風樂器選擇
+        chinese_instruments = {
+            "guzheng": self.chinese.guzheng,
+            "dizi": self.chinese.dizi,
+            "erhu": self.chinese.erhu,
+            "pipa": self.chinese.pipa,
+            "yangqin": self.chinese.yangqin,
+        }
+        
         for i, chord in enumerate(self.chord_prog):
             chord_notes = self._get_chord_notes(chord)
             note_offset = chord_notes[i % len(chord_notes)]
@@ -200,7 +220,13 @@ class BGMGenerator:
             chord_time = i * beats_per_chord * 60.0 / self.tempo
             note_name = f"C{(note_offset // 12) + 5}"
             
-            if self.genre == "electronic":
+            # 根據曲風選擇樂器
+            if self.genre in ["chinese", "chinese_classical"]:
+                # 輪流使用不同中國樂器
+                inst_key = list(chinese_instruments.keys())[i % len(chinese_instruments)]
+                play_func = chinese_instruments[inst_key]
+                sample = play_func(note_name, beats_per_chord * 60.0 / self.tempo * 0.8)
+            elif self.genre == "electronic":
                 sample = self.instruments.synth_lead(note_name, beats_per_chord * 60.0 / self.tempo * 0.6)
             elif self.genre == "ambient":
                 sample = self.instruments.pad_ambient(note_name, beats_per_chord * 60.0 / self.tempo * 0.8)
@@ -289,7 +315,7 @@ class BGMGenerator:
 def main():
     parser = argparse.ArgumentParser(description="專業 BGM 生成器")
     parser.add_argument("--genre", "-g", default="electronic",
-                       choices=["pop", "rock", "electronic", "ambient", "jazz", "funk", "ballad"])
+                       choices=["pop", "rock", "electronic", "ambient", "jazz", "funk", "ballad", "chinese", "chinese_classical"])
     parser.add_argument("--mood", "-m", default="energetic")
     parser.add_argument("--tempo", "-t", type=int, default=120)
     parser.add_argument("--duration", "-d", type=int, default=30)
