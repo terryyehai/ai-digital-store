@@ -37,7 +37,10 @@ class Boss:
         print("-"*60)
         
         # 分配任務
-        if any(kw in task for kw in ["設計", "玩法", "概念", "策劃"]):
+        if any(kw in task for kw in ["音效", "音樂", "BGM", "配音"]):
+            return AudioAgent().handle(task)
+        
+        elif any(kw in task for kw in ["設計", "玩法", "概念", "策劃"]):
             return PlannerAgent().handle(task)
         
         elif any(kw in task for kw in ["數值", "計算", "傷害", "經濟", "平衡"]):
