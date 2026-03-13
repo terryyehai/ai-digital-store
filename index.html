@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Digital Products - 智能數位產品商店</title>
+    <title>🤖 AI Digital Store - 智能數位產品商店</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: 'Noto Sans TC', sans-serif; }
@@ -12,32 +12,61 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        .product-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-white min-h-screen">
     <!-- Header -->
-    <header class="py-6 px-4 border-b border-gray-800">
+    <header class="py-6 px-4 border-b border-gray-800 backdrop-blur-md fixed w-full z-50 bg-gray-900/80">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold gradient-text">🤖 AI Digital Store</h1>
             <nav>
-                <a href="#products" class="mx-3 hover:text-purple-400">產品</a>
-                <a href="#about" class="mx-3 hover:text-purple-400">關於</a>
-                <a href="#contact" class="mx-3 hover:text-purple-400">聯繫</a>
+                <a href="#products" class="mx-3 hover:text-purple-400 transition">產品</a>
+                <a href="#how-to-buy" class="mx-3 hover:text-purple-400 transition">購買方式</a>
+                <a href="#contact" class="mx-3 hover:text-purple-400 transition">聯繫</a>
             </nav>
         </div>
     </header>
 
     <!-- Hero -->
-    <section class="py-20 px-4 text-center">
+    <section class="py-32 px-4 text-center">
         <h2 class="text-5xl font-bold mb-6">
             <span class="gradient-text">AI 賦能</span> 數位產品
         </h2>
         <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-            精選 AI Prompt 模板、工作流自動化腳本，幫助你提升工作效率 10 倍！
+            精選 AI Prompt 模板、工作流自動化腳本<br>
+            幫助你提升工作效率 10 倍！
         </p>
-        <a href="#products" class="bg-purple-600 hover:bg-purple-700 px-8 py-3 rounded-full font-semibold transition">
-            開始探索 →
-        </a>
+        <div class="flex gap-4 justify-center">
+            <a href="#products" class="bg-purple-600 hover:bg-purple-700 px-8 py-3 rounded-full font-semibold transition">
+                開始探索 →
+            </a>
+            <a href="#how-to-buy" class="border border-purple-500 hover:bg-purple-600 px-8 py-3 rounded-full font-semibold transition">
+                如何購買
+            </a>
+        </div>
+        
+        <!-- Stats -->
+        <div class="mt-16 flex justify-center gap-12 text-center">
+            <div>
+                <div class="text-3xl font-bold gradient-text">4+</div>
+                <div class="text-gray-500">產品數</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold gradient-text">100%</div>
+                <div class="text-gray-500">AI 生成</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold gradient-text">0%</div>
+                <div class="text-gray-500">上架費</div>
+            </div>
+        </div>
     </section>
 
     <!-- Products -->
@@ -47,78 +76,191 @@
             
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Product 1 -->
-                <div class="bg-gray-800 rounded-2xl p-6 border border-gray-700 hover:border-purple-500 transition">
+                <div class="product-card bg-gray-800 rounded-2xl p-6 border border-gray-700">
                     <div class="text-4xl mb-4">📝</div>
                     <h4 class="text-xl font-bold mb-2">Blog Post Prompt Pack</h4>
                     <p class="text-gray-400 mb-4">SEO優化文章生成Prompt，10分鐘產出專業部落格</p>
+                    <ul class="text-sm text-gray-500 mb-4">
+                        <li>✓ 部落格文章 Prompt</li>
+                        <li>✓ Meta 描述生成</li>
+                        <li>✓ SEO 關鍵詞優化</li>
+                    </ul>
                     <div class="flex justify-between items-center">
                         <span class="text-2xl font-bold text-purple-400">$9.99</span>
-                        <button onclick="buyProduct('blog-prompt')" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-sm">
+                        <a href="#how-to-buy" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-sm">
                             購買
-                        </button>
+                        </a>
                     </div>
                 </div>
 
                 <!-- Product 2 -->
-                <div class="bg-gray-800 rounded-2xl p-6 border border-gray-700 hover:border-purple-500 transition">
+                <div class="product-card bg-gray-800 rounded-2xl p-6 border border-gray-700">
                     <div class="text-4xl mb-4">🎬</div>
                     <h4 class="text-xl font-bold mb-2">YouTube Script Pro</h4>
                     <p class="text-gray-400 mb-4">YouTube影片腳本生成器，觀看時長大幅提升</p>
+                    <ul class="text-sm text-gray-500 mb-4">
+                        <li>✓ 開場 Hook 設計</li>
+                        <li>✓ 時間戳標記</li>
+                        <li>✓ CTA 模板</li>
+                    </ul>
                     <div class="flex justify-between items-center">
                         <span class="text-2xl font-bold text-purple-400">$7.99</span>
-                        <button onclick="buyProduct('youtube-script')" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-sm">
+                        <a href="#how-to-buy" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-sm">
                             購買
-                        </button>
+                        </a>
                     </div>
                 </div>
 
                 <!-- Product 3 -->
-                <div class="bg-gray-800 rounded-2xl p-6 border border-gray-700 hover:border-purple-500 transition">
+                <div class="product-card bg-gray-800 rounded-2xl p-6 border border-gray-700">
                     <div class="text-4xl mb-4">📊</div>
                     <h4 class="text-xl font-bold mb-2">Notion AI Workflow</h4>
                     <p class="text-gray-400 mb-4">Notion工作流模板，AI自動化你的 productivity</p>
+                    <ul class="text-sm text-gray-500 mb-4">
+                        <li>✓ 每日任務儀表板</li>
+                        <li>✓ 內容管線模板</li>
+                        <li>✓ 專案管理系統</li>
+                    </ul>
                     <div class="flex justify-between items-center">
                         <span class="text-2xl font-bold text-purple-400">$14.99</span>
-                        <button onclick="buyProduct('notion-workflow')" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-sm">
+                        <a href="#how-to-buy" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-sm">
                             購買
-                        </button>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card bg-gray-800 rounded-2xl p-6 border border-gray-700">
+                    <div class="text-4xl mb-4">💼</div>
+                    <h4 class="text-xl font-bold mb-2">Business Prompt Bundle</h4>
+                    <p class="text-gray-400 mb-4">商業應用Prompt合集，涵蓋多種場景</p>
+                    <ul class="text-sm text-gray-500 mb-4">
+                        <li>✓ 商業計劃書</li>
+                        <li>✓ 郵件行銷</li>
+                        <li>✓ 產品描述</li>
+                    </ul>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-purple-400">$12.99</span>
+                        <a href="#how-to-buy" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-sm">
+                            購買
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card bg-gray-800 rounded-2xl p-6 border border-gray-700">
+                    <div class="text-4xl mb-4">🎨</div>
+                    <h4 class="text-xl font-bold mb-2">Midjourney Master</h4>
+                    <p class="text-gray-400 mb-4">Midjourney 提示詞大師指南</p>
+                    <ul class="text-sm text-gray-500 mb-4">
+                        <li>✓ 風格關鍵詞庫</li>
+                        <li>✓ 參數教學</li>
+                        <li>✓ 100+ 範例</li>
+                    </ul>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-purple-400">$9.99</span>
+                        <a href="#how-to-buy" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-sm">
+                            購買
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card bg-gray-800 rounded-2xl p-6 border border-gray-700">
+                    <div class="text-4xl mb-4">🚀</div>
+                    <h4 class="text-xl font-bold mb-2">AI Tools Collection</h4>
+                    <p class="text-gray-400 mb-4">精選 AI 工具列表與評測</p>
+                    <ul class="text-sm text-gray-500 mb-4">
+                        <li>✓ 100+ AI 工具</li>
+                        <li>✓ 使用場景分類</li>
+                        <li>✓ 價格比較</li>
+                    </ul>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-purple-400">$6.99</span>
+                        <a href="#how-to-buy" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-sm">
+                            購買
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Crypto Payment -->
-    <section class="py-16 px-4 bg-gray-800">
-        <div class="max-w-4xl mx-auto text-center">
-            <h3 class="text-2xl font-bold mb-6">💳 加密貨幣付款</h3>
-            <p class="text-gray-400 mb-8">
-                我們支援比特幣、以太坊、USDT等多種加密貨幣
-            </p>
-            <div class="bg-gray-900 p-6 rounded-xl inline-block">
-                <p class="text-sm text-gray-400 mb-2">USDT (TRC20)</p>
-                <code class="text-lg text-purple-400">TXbF3xPqGxGn...</code>
-                <button onclick="copyAddress()" class="ml-2 text-purple-400 hover:text-purple-300">📋 複製</button>
+    <!-- How to Buy -->
+    <section id="how-to-buy" class="py-16 px-4 bg-gray-800">
+        <div class="max-w-4xl mx-auto">
+            <h3 class="text-2xl font-bold text-center mb-12">💳 購買方式</h3>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Method 1: Telegram -->
+                <div class="bg-gray-900 p-6 rounded-xl">
+                    <h4 class="text-xl font-bold mb-4">📱 方式一：Telegram</h4>
+                    <ol class="text-gray-400 space-y-2">
+                        <li>1. 聯繫 Telegram bot</li>
+                        <li>2. 告訴我們想要的產品</li>
+                        <li>3. 發送加密貨幣付款</li>
+                        <li>4. 立即收到產品</li>
+                    </ol>
+                    <a href="https://t.me/terryyeh_bot" class="mt-4 inline-block bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded-lg">
+                        聯繫 Bot →
+                    </a>
+                </div>
+
+                <!-- Method 2: Email -->
+                <div class="bg-gray-900 p-6 rounded-xl">
+                    <h4 class="text-xl font-bold mb-4">📧 方式二：Email</h4>
+                    <ol class="text-gray-400 space-y-2">
+                        <li>1. 發送郵件至</li>
+                        <li>2. 說明想要的產品</li>
+                        <li>3. 我們發送發票</li>
+                        <li>4. 付款後發送產品</li>
+                    </ol>
+                    <a href="mailto:terry@yeh.idv.tw" class="mt-4 inline-block bg-green-500 hover:bg-green-600 px-6 py-2 rounded-lg">
+                        發送郵件 →
+                    </a>
+                </div>
             </div>
-            <p class="text-sm text-gray-500 mt-4">
-                付款後自動發送產品到您的 Email
+
+            <!-- Crypto Payment -->
+            <div class="mt-8 bg-gray-900 p-6 rounded-xl">
+                <h4 class="text-xl font-bold mb-4">💰 加密貨幣付款</h4>
+                <p class="text-gray-400 mb-4">我們接受以下加密貨幣：</p>
+                <div class="flex gap-4 flex-wrap">
+                    <span class="bg-yellow-600 px-4 py-2 rounded-lg">₿ Bitcoin</span>
+                    <span class="bg-purple-600 px-4 py-2 rounded-lg">Ξ Ethereum</span>
+                    <span class="bg-green-600 px-4 py-2 rounded-lg">₮ USDT (TRC20)</span>
+                    <span class="bg-orange-600 px-4 py-2 rounded-lg">◎ Solana</span>
+                </div>
+                <p class="text-gray-500 text-sm mt-4">
+                    付款後請截圖並發送給我們確認
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-16 px-4">
+        <div class="max-w-2xl mx-auto text-center">
+            <h3 class="text-2xl font-bold mb-6">📬 聯繫我們</h3>
+            <p class="text-gray-400 mb-8">
+                有任何問題？想要客製化產品？<br>
+                歡迎通過以下方式聯繫我們！
             </p>
+            <div class="flex justify-center gap-4">
+                <a href="https://t.me/terryyeh_bot" class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-lg font-semibold">
+                    Telegram
+                </a>
+                <a href="mailto:terry@yeh.idv.tw" class="bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-lg font-semibold">
+                    Email
+                </a>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="py-8 px-4 border-t border-gray-800 text-center text-gray-500">
         <p>© 2026 AI Digital Store. All rights reserved.</p>
+        <p class="text-sm mt-2">Powered by OpenClaw 🤖</p>
     </footer>
-
-    <script>
-        function buyProduct(productId) {
-            alert('感謝購買！請發送加密貨幣到指定地址，我們將自動發送產品。');
-        }
-        
-        function copyAddress() {
-            alert('地址已複製！');
-        }
-    </script>
 </body>
 </html>
