@@ -48,7 +48,7 @@ class MarketingAgent:
 
 📝 执行计划：
 1. 製作病毒式短影片
-2. 找{K random.randint(3, 10)}個KOL推廣
+2. 找{random.randint(3, 10)}個KOL推廣
 3. 投放廣告
         """
         
