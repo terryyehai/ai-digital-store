@@ -1,0 +1,28 @@
+[
+  {
+    "id": "ORD-20260313-133632",
+    "timestamp": "2026-03-13T13:36:32.244939",
+    "customer": {
+      "email": "test@example.com",
+      "name": "Test User"
+    },
+    "items": [
+      {
+        "name": "Blog Post Prompt Pack",
+        "price": 9.99,
+        "file": "prompts/blog-post-prompt.md",
+        "description": "SEO優化文章生成Prompt"
+      },
+      {
+        "name": "YouTube Script Pro",
+        "price": 7.99,
+        "file": "prompts/youtube-script-prompt.md",
+        "description": "YouTube影片腳本生成器"
+      }
+    ],
+    "total": 17.98,
+    "status": "pending",
+    "payment_method": null,
+    "payment_confirmed": false
+  }
+]

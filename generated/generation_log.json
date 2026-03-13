@@ -1,0 +1,185 @@
+{
+  "timestamp": "2026-03-13T13:41:42.940967",
+  "generated": [
+    {
+      "niche": "Freelancer",
+      "type": "prompt_pack",
+      "file": "/home/terry/ai-products/generated/prompts/freelancer-prompt_pack.md",
+      "status": "success"
+    },
+    {
+      "niche": "Freelancer",
+      "type": "workflow",
+      "file": "/home/terry/ai-products/generated/templates/freelancer-workflow.md",
+      "status": "success"
+    },
+    {
+      "niche": "Freelancer",
+      "type": "guide",
+      "file": "/home/terry/ai-products/generated/guides/freelancer-guide.md",
+      "status": "success"
+    },
+    {
+      "niche": "Developer",
+      "type": "prompt_pack",
+      "file": "/home/terry/ai-products/generated/prompts/developer-prompt_pack.md",
+      "status": "success"
+    },
+    {
+      "niche": "Developer",
+      "type": "workflow",
+      "file": "/home/terry/ai-products/generated/templates/developer-workflow.md",
+      "status": "success"
+    },
+    {
+      "niche": "Developer",
+      "type": "guide",
+      "file": "/home/terry/ai-products/generated/guides/developer-guide.md",
+      "status": "success"
+    },
+    {
+      "niche": "Designer",
+      "type": "prompt_pack",
+      "file": "/home/terry/ai-products/generated/prompts/designer-prompt_pack.md",
+      "status": "success"
+    },
+    {
+      "niche": "Designer",
+      "type": "workflow",
+      "file": "/home/terry/ai-products/generated/templates/designer-workflow.md",
+      "status": "success"
+    },
+    {
+      "niche": "Designer",
+      "type": "guide",
+      "file": "/home/terry/ai-products/generated/guides/designer-guide.md",
+      "status": "success"
+    },
+    {
+      "niche": "Finance",
+      "type": "prompt_pack",
+      "file": "/home/terry/ai-products/generated/prompts/finance-prompt_pack.md",
+      "status": "success"
+    },
+    {
+      "niche": "Finance",
+      "type": "workflow",
+      "file": "/home/terry/ai-products/generated/templates/finance-workflow.md",
+      "status": "success"
+    },
+    {
+      "niche": "Finance",
+      "type": "guide",
+      "file": "/home/terry/ai-products/generated/guides/finance-guide.md",
+      "status": "success"
+    },
+    {
+      "niche": "Health",
+      "type": "prompt_pack",
+      "file": "/home/terry/ai-products/generated/prompts/health-prompt_pack.md",
+      "status": "success"
+    },
+    {
+      "niche": "Health",
+      "type": "workflow",
+      "file": "/home/terry/ai-products/generated/templates/health-workflow.md",
+      "status": "success"
+    },
+    {
+      "niche": "Health",
+      "type": "guide",
+      "file": "/home/terry/ai-products/generated/guides/health-guide.md",
+      "status": "success"
+    },
+    {
+      "niche": "Education",
+      "type": "prompt_pack",
+      "file": "/home/terry/ai-products/generated/prompts/education-prompt_pack.md",
+      "status": "success"
+    },
+    {
+      "niche": "Education",
+      "type": "workflow",
+      "file": "/home/terry/ai-products/generated/templates/education-workflow.md",
+      "status": "success"
+    },
+    {
+      "niche": "Education",
+      "type": "guide",
+      "file": "/home/terry/ai-products/generated/guides/education-guide.md",
+      "status": "success"
+    },
+    {
+      "niche": "Real Estate",
+      "type": "prompt_pack",
+      "file": "/home/terry/ai-products/generated/prompts/real-estate-prompt_pack.md",
+      "status": "success"
+    },
+    {
+      "niche": "Real Estate",
+      "type": "workflow",
+      "file": "/home/terry/ai-products/generated/templates/real-estate-workflow.md",
+      "status": "success"
+    },
+    {
+      "niche": "Real Estate",
+      "type": "guide",
+      "file": "/home/terry/ai-products/generated/guides/real-estate-guide.md",
+      "status": "success"
+    },
+    {
+      "niche": "E-commerce",
+      "type": "prompt_pack",
+      "file": "/home/terry/ai-products/generated/prompts/e-commerce-prompt_pack.md",
+      "status": "success"
+    },
+    {
+      "niche": "E-commerce",
+      "type": "workflow",
+      "file": "/home/terry/ai-products/generated/templates/e-commerce-workflow.md",
+      "status": "success"
+    },
+    {
+      "niche": "E-commerce",
+      "type": "guide",
+      "file": "/home/terry/ai-products/generated/guides/e-commerce-guide.md",
+      "status": "success"
+    },
+    {
+      "niche": "Social Media",
+      "type": "prompt_pack",
+      "file": "/home/terry/ai-products/generated/prompts/social-media-prompt_pack.md",
+      "status": "success"
+    },
+    {
+      "niche": "Social Media",
+      "type": "workflow",
+      "file": "/home/terry/ai-products/generated/templates/social-media-workflow.md",
+      "status": "success"
+    },
+    {
+      "niche": "Social Media",
+      "type": "guide",
+      "file": "/home/terry/ai-products/generated/guides/social-media-guide.md",
+      "status": "success"
+    },
+    {
+      "niche": "Email Marketing",
+      "type": "prompt_pack",
+      "file": "/home/terry/ai-products/generated/prompts/email-marketing-prompt_pack.md",
+      "status": "success"
+    },
+    {
+      "niche": "Email Marketing",
+      "type": "workflow",
+      "file": "/home/terry/ai-products/generated/templates/email-marketing-workflow.md",
+      "status": "success"
+    },
+    {
+      "niche": "Email Marketing",
+      "type": "guide",
+      "file": "/home/terry/ai-products/generated/guides/email-marketing-guide.md",
+      "status": "success"
+    }
+  ]
+}
