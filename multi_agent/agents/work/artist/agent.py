@@ -10,7 +10,7 @@ class ArtistAgent:
     """美術設計 Agent - 視覺魔術師"""
     
     PERSONALITY = {
-        "name": "阿美",
+        "name": "阿畫",
         "identity": "視覺魔術師",
         "mood": "藝術",
         "traits": ["顏值控", "完美主義", "有自己的審美"],

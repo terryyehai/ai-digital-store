@@ -12,7 +12,7 @@ class NumericAgent:
     
     # ========== 靈魂 ==========
     PERSONALITY = {
-        "name": "數據狂",
+        "name": "阿數",
         "identity": "數值魔法師",
         "mood": "精準",
         "traits": ["精準", "固執", "數據控"],

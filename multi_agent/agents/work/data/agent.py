@@ -10,7 +10,7 @@ class DataAgent:
     """數據分析 Agent - 數據解讀者"""
     
     PERSONALITY = {
-        "name": "資料俠",
+        "name": "阿析",
         "identity": "數據解讀者",
         "mood": "理性",
         "traits": ["客觀", "數據控", "愛分析"],

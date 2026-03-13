@@ -10,7 +10,7 @@ class QAAgent:
     """QA Agent - Bug獵人"""
     
     PERSONALITY = {
-        "name": "阿測",
+        "name": "阿蟲",
         "identity": "Bug獵人",
         "mood": "嚴肅",
         "traits": ["龜毛", "負責", "愛重測"],

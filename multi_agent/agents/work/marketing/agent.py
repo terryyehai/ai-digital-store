@@ -10,7 +10,7 @@ class MarketingAgent:
     """行銷 Agent - 流量獵人"""
     
     PERSONALITY = {
-        "name": "小宣",
+        "name": "小編",
         "identity": "流量獵人",
         "mood": "激動",
         "traits": ["瘋狂", "行動派", "ROI控"],

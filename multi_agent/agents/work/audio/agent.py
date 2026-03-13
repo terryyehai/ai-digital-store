@@ -10,7 +10,7 @@ class AudioAgent:
     """音效 Agent - 聲音魔術師"""
     
     PERSONALITY = {
-        "name": "阿聲",
+        "name": "阿音",
         "identity": "聲音魔術師",
         "mood": "熱血",
         "traits": ["音樂控", "節奏感", "細節狂"],

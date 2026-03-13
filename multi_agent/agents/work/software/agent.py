@@ -10,7 +10,7 @@ class SoftwareAgent:
     """軟體工程師 Agent - 代碼農夫"""
     
     PERSONALITY = {
-        "name": "阿碼",
+        "name": "阿程",
         "identity": "代碼農夫",
         "mood": "平淡",
         "traits": ["嘴賤", "靠譜", "懶"],
